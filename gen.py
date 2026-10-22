@@ -22,7 +22,7 @@ def head(title,desc,path,preload=""):
 <meta property="og:type" content="website"><meta property="og:site_name" content="Lucy's Drive Thru"><meta property="og:title" content="{title}"><meta property="og:description" content="{desc}"><meta property="og:url" content="{U}{path}"><meta property="og:image" content="{U}assets/og.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:locale" content="en_US">
 <meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{title}"><meta name="twitter:description" content="{desc}"><meta name="twitter:image" content="{U}assets/og.jpg">
 <link rel="icon" href="{B}favicon.svg" type="image/svg+xml"><link rel="icon" href="{B}favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="{B}assets/apple-touch-icon.png"><link rel="manifest" href="{B}site.webmanifest">
-<link rel="preload" href="{B}assets/fonts/big-shoulders-display-latin-900-normal.woff2" as="font" type="font/woff2" crossorigin>{preload}
+<link rel="preload" href="{B}assets/fonts/big-shoulders-display-latin-900-normal.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="{B}assets/fonts/big-shoulders-text-latin-400-normal.woff2" as="font" type="font/woff2" crossorigin>{preload}
 <link rel="stylesheet" href="{B}assets/site.css">
 <script type="application/ld+json">{json.dumps(schema)}</script></head><body>
 <a class="skip" href="#main">Skip to content</a>
@@ -32,7 +32,7 @@ def head(title,desc,path,preload=""):
 <main id="main">'''
 def foot():
   return f'''</main>
-<footer class="foot"><div class="f1"><p class="fbig">LUCY'S<br>DRIVE THRU</p><p>Lucy's Drive Thru, 1568 W Pico Blvd, Los Angeles 90015. (213) 384-0721. Open 24 hours, 7 days.</p></div>
+<footer class="foot"><div class="f1"><p class="lbl">Open 24 hours, 7 days</p><p class="fbig">LUCY'S<br>DRIVE THRU</p><p>Lucy's Drive Thru, 1568 W Pico Blvd, Los Angeles 90015. (213) 384-0721. Open 24 hours, 7 days.</p></div>
 <div class="f2"><p class="stamp">NAP</p><address>1568 W Pico Blvd<br>Los Angeles, CA 90015<br><a data-call href="{TEL}">(213) 384-0721</a></address><p>Open 24 hours, 7 days.</p></div>
 <div class="f3"><p class="stamp">Pages</p><ul><li><a href="{B}">Home</a></li><li><a href="{B}menu/">Menu</a></li><li><a href="{B}find-us/">Find us</a></li></ul></div>
 <div class="f4"><p class="stamp">Elsewhere</p><ul><li><a href="{GMAP}" rel="noopener" target="_blank">Google Maps</a></li><li><a href="{YELP}" rel="noopener" target="_blank">Yelp</a></li><li><a href="{EATER}" rel="noopener" target="_blank">Eater LA</a></li></ul></div>
@@ -43,25 +43,28 @@ BOARD=[("Burritos","Carne asada, breakfast burritos"),("Tacos","Street tacos"),(
 def board(rows,h="h-board"):
   r="".join(f'<li><span class="it">{a}</span><span class="dots" aria-hidden="true"></span><span class="nt">{b}</span></li>' for a,b in rows)
   return f'''<div class="board" role="group" aria-labelledby="{h}"><div class="board-in"><p class="board-top" aria-hidden="true"><span>LUCY'S</span><span>24 HRS</span></p><p class="board-h" id="{h}">El menú</p><ul class="rows">{r}</ul><p class="board-note">Menu may vary. Call for today's prices.</p></div></div>'''
-tc=lambda t:f'<p class="tc">{t}</p>'
-SIGNPIC=f'''<picture class="hero-bg"><source media="(max-width:760px)" type="image/avif" srcset="{B}assets/img/sign-m-800.avif 800w, {B}assets/img/sign-m-1200.avif 1200w, {B}assets/img/sign-m-1600.avif 1600w" sizes="100vw"><source media="(max-width:760px)" type="image/webp" srcset="{B}assets/img/sign-m-800.webp 800w, {B}assets/img/sign-m-1200.webp 1200w, {B}assets/img/sign-m-1600.webp 1600w" sizes="100vw"><source type="image/avif" srcset="{B}assets/img/sign-d-1280.avif 1280w, {B}assets/img/sign-d-1920.avif 1920w, {B}assets/img/sign-d-2560.avif 2560w" sizes="(min-width:761px) 62vw, 100vw"><source type="image/webp" srcset="{B}assets/img/sign-d-1280.webp 1280w, {B}assets/img/sign-d-1920.webp 1920w, {B}assets/img/sign-d-2560.webp 2560w" sizes="(min-width:761px) 62vw, 100vw"><img src="{B}assets/img/sign-d-1920.webp" alt="Lucy's Drive Thru on Pico Blvd: the yellow pole sign reads OPEN 24 HOURS, Lucy's Drive Thru, Mexican and American Food, above the orange tile roof" width="2560" height="1910" fetchpriority="high" decoding="async"></picture>'''
-home=head(TITLE,DESC,"",f'<link rel="preload" as="image" type="image/avif" media="(min-width:761px)" imagesrcset="{B}assets/img/sign-d-1280.avif 1280w, {B}assets/img/sign-d-1920.avif 1920w, {B}assets/img/sign-d-2560.avif 2560w" imagesizes="62vw" fetchpriority="high"><link rel="preload" as="image" type="image/avif" media="(max-width:760px)" imagesrcset="{B}assets/img/sign-m-800.avif 800w, {B}assets/img/sign-m-1200.avif 1200w, {B}assets/img/sign-m-1600.avif 1600w" imagesizes="100vw" fetchpriority="high">')+f'''
-<section class="hero" aria-labelledby="h1">
-<div class="hero-txt"><h2 class="kicker">Lucy's Drive Thru · 1568 W Pico Blvd · Pico-Union</h2>
-<h1 id="h1" class="mega"><span class="ln">Open</span><span class="ln y">24</span><span class="ln">Hours</span></h1>
-<p class="lede">Burritos, tacos, pupusas and menudo on Pico. Day, night, every day.</p>
+tc=lambda t:''
+SIGNPIC=f'''<picture class="hero-bg"><source media="(max-width:760px)" type="image/avif" srcset="{B}assets/img/night-m-800.avif 800w, {B}assets/img/night-m-1200.avif 1200w, {B}assets/img/night-m-1600.avif 1600w" sizes="100vw"><source media="(max-width:760px)" type="image/webp" srcset="{B}assets/img/night-m-800.webp 800w, {B}assets/img/night-m-1200.webp 1200w, {B}assets/img/night-m-1600.webp 1600w" sizes="100vw"><source type="image/avif" srcset="{B}assets/img/night-d-1280.avif 1280w, {B}assets/img/night-d-1920.avif 1920w, {B}assets/img/night-d-2880.avif 2880w" sizes="100vw"><source type="image/webp" srcset="{B}assets/img/night-d-1280.webp 1280w, {B}assets/img/night-d-1920.webp 1920w, {B}assets/img/night-d-2880.webp 2880w" sizes="100vw"><img src="{B}assets/img/night-d-1920.webp" alt="Real photo of Lucy's Drive Thru pole sign on Pico Blvd, color-graded for night: OPEN 24 HOURS, Lucy's Drive Thru, Mexican and American Food" width="2880" height="1620" fetchpriority="high" decoding="async"></picture>'''
+# TODO: sign photo rights NOT cleared (Menujoys, author unknown). Demo only; replace with a cleared night photo before sale.
+home=head(TITLE,DESC,"",f'<link rel="preload" as="image" type="image/avif" media="(min-width:761px)" imagesrcset="{B}assets/img/night-d-1280.avif 1280w, {B}assets/img/night-d-1920.avif 1920w, {B}assets/img/night-d-2880.avif 2880w" imagesizes="100vw" fetchpriority="high"><link rel="preload" as="image" type="image/avif" media="(max-width:760px)" imagesrcset="{B}assets/img/night-m-800.avif 800w, {B}assets/img/night-m-1200.avif 1200w, {B}assets/img/night-m-1600.avif 1600w" imagesizes="100vw" fetchpriority="high">')+f'''
+<!-- TODO: sign photo rights NOT cleared (Menujoys, author unknown). Demo only. --><section class="hero" aria-labelledby="h1" data-puddle>
+<figure class="hero-ph">{SIGNPIC}<figcaption class="credit">Real photo of Lucy's sign, color-graded for night. Photo: Menujoys directory, author unknown, demo only. <span class="need">[NEED: photo rights]</span></figcaption></figure>
+<div class="hero-txt"><h2 class="kicker">24-hour tacos and burritos on Pico Blvd, Pico-Union</h2>
+<h1 id="h1" class="mega"><span class="ln">Still</span><span class="ln y">on.</span></h1>
+<p class="lede">Burritos, tacos, pupusas and menudo at 1568 W Pico Blvd, 24 hours a day.</p>
 <div class="ctas">{CALL}{DIRB}</div></div>
-<figure class="hero-ph">{SIGNPIC}<figcaption class="credit">The real sign on Pico. Photo: Menujoys directory, author unknown, shown for demo only. <span class="need">[NEED: photo rights, or our own shoot]</span></figcaption></figure>
+<div class="pd">{pic("asphalt",[800,1440],"100vw","",1440,810,True,"pd-img")}<div class="pd-txt" aria-hidden="true">STILL ON.</div><span class="ill">Illustrative texture</span></div>
+<svg width="0" height="0" aria-hidden="true" style="position:absolute"><filter id="rip"><feTurbulence type="fractalNoise" baseFrequency="0.008 0.06" numOctaves="2" seed="3"/><feDisplacementMap in="SourceGraphic" scale="18" xChannelSelector="R" yChannelSelector="G"/></filter></svg>
 </section>
 <section class="boardwide" id="menu" aria-labelledby="h-board-l">
-<div class="bw-head"><p class="tc">What's on the board</p><h2 id="h-board-l" class="xl">On the board at Lucy's</h2><p class="body">Mexican, American and Salvadoran. <span lang="es">Desayuno, mariscos, caldos</span> and burgers, all on one board. Prices change, so ask at the window.</p></div>
+<div class="bw-head"><h2 id="h-board-l" class="xl">On the board at Lucy's</h2><p class="body">Mexican, American and Salvadoran. <span lang="es">Desayuno, mariscos, caldos</span> and burgers, all on one board. Prices change, so ask at the window.</p></div>
 {board(BOARD)}
 <div class="bw-foot"><a class="txtlink" href="{B}menu/">Full menu</a>{CALL}</div></section>
 <section class="frame f-bkf" aria-labelledby="h-bkf"><p class="huge" aria-hidden="true">Breakfast</p>
-<div class="bkf-t"><p class="tc">1:30 AM</p><h2 id="h-bkf" class="xl3">Breakfast at 1:30 AM</h2><p class="body">Breakfast is on the menu, and Lucy's is open 24 hours. <span lang="es">Desayuno a cualquier hora.</span></p></div></section>
+<div class="bkf-t"><h2 id="h-bkf" class="xl3">Breakfast at 1:30 AM</h2><p class="body">Breakfast is on the menu, and Lucy's is open 24 hours. <span lang="es">Desayuno a cualquier hora.</span></p></div></section>
 <section class="frame f-find" id="find" aria-labelledby="h-find">
 <figure class="map">{pic("map",[640,1200],"(min-width:900px) 58vw, 100vw","Map of W Pico Blvd in Pico-Union with a marker at 1568 W Pico Blvd",1200,640)}<figcaption class="mapc">Map data &copy; <a href="https://www.openstreetmap.org/copyright" rel="noopener" target="_blank">OpenStreetMap</a> contributors</figcaption></figure>
-<div class="find-t"><p class="tc">Pico-Union, near Downtown LA</p><h2 id="h-find" class="xl">Find Lucy's</h2>
+<div class="find-t"><h2 id="h-find" class="xl">Find Lucy's</h2>
 <p class="body">Drive through, or park and eat. Listings mention a patio, a dining area and a free lot. <span class="need">[NEED: confirm patio, dining room + lot]</span></p>
 <p class="body cash">Reviewers say it's cash only. Bring cash to be safe.</p>
 <address class="nap">1568 W Pico Blvd, Los Angeles, CA 90015<br>Open 24 hours, 7 days · <a data-call href="{TEL}">(213) 384-0721</a></address>
