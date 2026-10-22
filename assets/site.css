@@ -179,3 +179,17 @@ body{font-size:clamp(18px,1.3vw,20px);line-height:1.45}
 .hero-txt{order:1;padding:28px var(--pad) 20px}.hero-ph{order:2;aspect-ratio:4/5}.pd{order:3;height:110px}
 .mega{font-size:26vw}.mega .ln{display:block}.mega .ln:nth-child(2)::before{content:none}.pd-txt{font-size:26vw;left:var(--pad)}}
 @media(max-width:760px){.hero{padding:0!important;align-items:stretch}.hero-txt{padding:24px var(--pad) 20px!important;align-self:stretch;width:100%}.kicker{font-size:12px}}
+/* Rev 4.2.1: disclosure in fold, whole sign on mobile fold */
+@media(min-width:761px){.hero{height:calc(100svh - 60px);min-height:620px;grid-template-rows:1fr auto}.pd{height:clamp(110px,11vw,170px)}.hero-txt{padding:32px 0 20px}}
+.credit{z-index:3}
+.f-bkf .bkf-t{margin:24px 0 0 auto!important}
+@media(max-width:760px){.hero{position:relative;display:block!important;min-height:calc(100svh - 144px)}
+.hero-ph{position:absolute!important;inset:0;aspect-ratio:auto!important}.hero-bg img{object-position:100% 0}
+.hero-txt{position:relative;z-index:2;padding:20px var(--pad) 72px!important;min-height:calc(100svh - 144px);display:flex;flex-direction:column}
+.hero-txt .mega{font-size:21vw}.hero-txt .lede{max-width:56%;font-size:18px;margin:16px 0 0}.hero-txt .ctas{margin-top:auto;position:relative}
+.hero-txt .kicker{max-width:60%}
+.hero-ph::after{content:"";position:absolute;left:0;right:0;bottom:0;height:42%;background:linear-gradient(transparent,rgba(13,14,16,.88));pointer-events:none}
+.credit{z-index:3;font-size:11px;padding:8px var(--pad)}
+.pd{display:block;position:relative;height:110px}}
+@media(max-width:760px){.hero-txt{padding-bottom:64px!important}}
+@media(max-width:760px){.hero-ph{inset:0 0 110px 0!important}}
