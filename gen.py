@@ -45,18 +45,16 @@ def board(rows,h="h-board"):
   return f'''<div class="board" role="group" aria-labelledby="{h}"><div class="board-in"><p class="board-top" aria-hidden="true"><span>LUCY'S</span><span>24 HRS</span></p><p class="board-h" id="{h}">El menú</p><ul class="rows">{r}</ul><p class="board-note">Menu may vary. Call for today's prices.</p></div></div>'''
 tc=lambda t:f'<p class="tc"><span class="rec" aria-hidden="true">REC</span> {t}</p>'
 ILL='<span class="ill">Illustrative scene</span>'
-home=head(TITLE,DESC,"",f'<link rel="preload" as="image" type="image/avif" media="(min-width:901px)" imagesrcset="{B}assets/img/hero_pico-d400.avif 400w, {B}assets/img/hero_pico-d768.avif 768w" imagesizes="38vw" fetchpriority="high"><link rel="preload" as="image" type="image/avif" media="(max-width:900px)" imagesrcset="{B}assets/img/hero_pico-m400.avif 400w, {B}assets/img/hero_pico-m768.avif 768w" imagesizes="100vw" fetchpriority="high">')+f'''
-<section class="hero" aria-labelledby="h1">
-<div class="hero-txt"><p class="tc live"><span class="rec" aria-hidden="true">REC</span> <span data-clock aria-hidden="true">03:07:12 AM</span> · 1568 W PICO BLVD · PICO-UNION</p>
+home=head(TITLE,DESC,"",f'<link rel="preload" as="image" type="image/avif" media="(min-width:761px)" imagesrcset="{B}assets/img/hero-d-1280.avif 1280w, {B}assets/img/hero-d-1920.avif 1920w, {B}assets/img/hero-d-2880.avif 2880w" imagesizes="100vw" fetchpriority="high"><link rel="preload" as="image" type="image/avif" media="(max-width:760px)" imagesrcset="{B}assets/img/hero-m-800.avif 800w, {B}assets/img/hero-m-1200.avif 1200w, {B}assets/img/hero-m-1600.avif 1600w" imagesizes="100vw" fetchpriority="high">')+f'''
+<section class="hero" aria-labelledby="h1" data-puddle>
+<picture class="hero-bg"><source media="(max-width:760px)" type="image/avif" srcset="{B}assets/img/hero-m-800.avif 800w, {B}assets/img/hero-m-1200.avif 1200w, {B}assets/img/hero-m-1600.avif 1600w" sizes="100vw"><source media="(max-width:760px)" type="image/webp" srcset="{B}assets/img/hero-m-800.webp 800w, {B}assets/img/hero-m-1200.webp 1200w, {B}assets/img/hero-m-1600.webp 1600w" sizes="100vw"><source type="image/avif" srcset="{B}assets/img/hero-d-1280.avif 1280w, {B}assets/img/hero-d-1920.avif 1920w, {B}assets/img/hero-d-2880.avif 2880w" sizes="100vw"><source type="image/webp" srcset="{B}assets/img/hero-d-1280.webp 1280w, {B}assets/img/hero-d-1920.webp 1920w, {B}assets/img/hero-d-2880.webp 2880w" sizes="100vw"><img src="{B}assets/img/hero-d-1920.webp" alt="Illustrative: an empty, rain-wet Los Angeles boulevard at 3 AM, sodium streetlights reflected in a puddle" width="2880" height="1620" fetchpriority="high" decoding="async"></picture>
+<div class="pd-txt" aria-hidden="true">STILL ON.</div>
+<span class="ill hero-ill">Illustrative scene · 03:07 AM</span>
+<div class="hero-txt"><p class="tc live"><span class="rec" aria-hidden="true">REC</span> <span data-clock aria-hidden="true">03:07:12 AM</span> · 1568 W PICO BLVD</p>
 <h2 class="kicker">24-hour tacos and burritos on Pico Blvd</h2>
-<h1 id="h1" class="mega"><span class="ln">Still</span><span class="ln">on.</span></h1>
-<p class="lede">Burritos, tacos, pupusas and menudo at 1568 W Pico Blvd, 24 hours a day.</p>
-<div class="ctas">{CALL}{DIRB}</div></div>
-<figure class="hero-ph"><picture><source media="(max-width:900px)" type="image/avif" srcset="{B}assets/img/hero_pico-m400.avif 400w, {B}assets/img/hero_pico-m768.avif 768w" sizes="100vw"><source media="(max-width:900px)" type="image/webp" srcset="{B}assets/img/hero_pico-m400.webp 400w, {B}assets/img/hero_pico-m768.webp 768w" sizes="100vw"><source type="image/avif" srcset="{B}assets/img/hero_pico-d400.avif 400w, {B}assets/img/hero_pico-d768.avif 768w" sizes="38vw"><source type="image/webp" srcset="{B}assets/img/hero_pico-d400.webp 400w, {B}assets/img/hero_pico-d768.webp 768w" sizes="38vw"><img src="{B}assets/img/hero_pico-d768.webp" alt="Illustrative scene: a sodium streetlight and palms reflected in a rain puddle on an empty LA boulevard at night" width="768" height="1024" fetchpriority="high" decoding="async"></picture>{ILL}<figcaption class="tc sm">CAM 01 · W PICO, WET</figcaption></figure>
-</section>
-<section class="puddle" aria-label="Reflection of the words Still on in a wet street">
-<div class="pd" data-puddle>{pic("puddle",[640,1024],"100vw","",1024,576,True,"pd-img")}<div class="pd-txt" aria-hidden="true">STILL ON.</div><canvas class="pd-gl" aria-hidden="true"></canvas>{ILL}</div>
-<svg width="0" height="0" aria-hidden="true" style="position:absolute"><filter id="rip"><feTurbulence type="fractalNoise" baseFrequency="0.008 0.06" numOctaves="2" seed="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="18" xChannelSelector="R" yChannelSelector="G"/></filter></svg>
+<h1 id="h1" class="mega"><span class="ln">Still</span><span class="ln">on.</span></h1></div>
+<div class="hero-cta"><p class="lede">Burritos, tacos, pupusas and menudo at 1568 W Pico Blvd, 24 hours a day.</p><div class="ctas">{CALL}{DIRB}</div></div>
+<svg width="0" height="0" aria-hidden="true" style="position:absolute"><filter id="rip"><feTurbulence type="fractalNoise" baseFrequency="0.008 0.06" numOctaves="2" seed="3"/><feDisplacementMap in="SourceGraphic" scale="18" xChannelSelector="R" yChannelSelector="G"/></filter></svg>
 </section>
 <section class="frame f-board" id="menu" aria-labelledby="h-board-l">
 <div class="fb-l"><h2 id="h-board-l" class="xl2">On the board at Lucy's</h2><p class="body">Mexican, American and Salvadoran: burritos, tacos, pupusas, enchilada plates, seafood, caldos, menudo, burgers, fish and chips, breakfast.</p><p class="body">Prices change, so ask at the window.</p><p><a class="txtlink" href="{B}menu/">Full board →</a></p></div>
@@ -65,7 +63,9 @@ home=head(TITLE,DESC,"",f'<link rel="preload" as="image" type="image/avif" media
 <section class="frame f-bkf" aria-labelledby="h-bkf">{tc("01:30 AM")}<p class="huge" aria-hidden="true">Breakfast</p>
 <div class="bkf-t"><h2 id="h-bkf" class="xl3">Breakfast at 1:30 AM</h2><p class="body">Breakfast is on the menu, and Lucy's is open 24 hours. <span lang="es">Desayuno a cualquier hora.</span></p></div></section>
 <section class="frame f-sign" aria-labelledby="h-sign"><p class="tc">DAYTIME · SAME SIGN</p>
-<h2 id="h-sign" class="addr">1568 W<br>Pico Blvd</h2><div class="sign-t"><p class="body">The yellow sign out front says OPEN 24 HOURS, and it means it. Pico-Union, a few minutes west of Downtown LA.</p><p class="need">[NEED: photo rights for the real sign photo; until then this frame is type only]</p></div></section>
+<h2 id="h-sign" class="addr">1568 W<br>Pico Blvd</h2>
+<figure class="sign-ph">{pic("sign",[640,1200],"(min-width:900px) 50vw, 100vw","Lucy's Drive Thru on Pico Blvd in daylight, with its yellow pole sign",1200,895)}<figcaption class="mapc">Lucy's on Pico. Photo: Menujoys directory, author unknown. <span class="need">[NEED: photo rights, or replace with our own shot]</span></figcaption></figure>
+<div class="sign-t"><p class="body">The yellow sign out front says OPEN 24 HOURS, and it means it. Pico-Union, a few minutes west of Downtown LA.</p></div></section>
 <section class="frame f-find" id="find" aria-labelledby="h-find">
 <figure class="map">{pic("map",[640,1200],"(min-width:900px) 58vw, 100vw","Map of W Pico Blvd in Pico-Union with a marker at 1568 W Pico Blvd",1200,640)}<figcaption class="mapc">Map data © <a href="https://www.openstreetmap.org/copyright" rel="noopener" target="_blank">OpenStreetMap</a> contributors</figcaption></figure>
 <div class="find-t">{tc("05:52 AM")}<h2 id="h-find" class="xl">Find Lucy's</h2>

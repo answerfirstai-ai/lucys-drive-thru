@@ -13,7 +13,7 @@ if('IntersectionObserver'in window&&!rm){const io=new IntersectionObserver(es=>e
 // puddle
 const p=d.querySelector('[data-puddle]');if(!p||rm)return;
 const disp=d.querySelector('#rip feDisplacementMap'),tb=d.querySelector('#rip feTurbulence');let tk=0;
-const onS=()=>{if(tk)return;tk=requestAnimationFrame(()=>{tk=0;const r=p.getBoundingClientRect(),k=Math.max(0,Math.min(1,1-r.top/innerHeight));disp.setAttribute('scale',(10+k*40).toFixed(1));tb.setAttribute('baseFrequency',`0.008 ${(0.05+k*0.04).toFixed(3)}`)})};
+const onS=()=>{if(tk)return;tk=requestAnimationFrame(()=>{tk=0;const r=p.getBoundingClientRect(),k=Math.max(0,Math.min(1,-r.top/r.height*1.6));disp.setAttribute('scale',(10+k*40).toFixed(1));tb.setAttribute('baseFrequency',`0.008 ${(0.05+k*0.04).toFixed(3)}`)})};
 addEventListener('scroll',onS,{passive:true});onS();
-if(matchMedia('(min-width:1024px)').matches){const go=()=>import('./puddle-gl.js').then(m=>m.default(p)).catch(()=>{});('requestIdleCallback'in window)?requestIdleCallback(go,{timeout:2500}):setTimeout(go,1500)}
+p.addEventListener('pointermove',e=>{const r=p.getBoundingClientRect();disp.setAttribute('scale',(20+40*Math.abs(e.clientX-r.left-r.width/2)/r.width*2).toFixed(1))},{passive:true});
 })();

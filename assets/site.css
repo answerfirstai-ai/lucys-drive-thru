@@ -27,7 +27,7 @@ a{color:inherit}img{display:block;max-width:100%;height:auto}
 .tc{font:500 13px/1.3 var(--fm);letter-spacing:.08em;text-transform:uppercase;color:var(--ac);margin:0 0 18px;font-variant-numeric:tabular-nums}
 .tc.sm{font-size:11px;color:var(--mu)}.rec{display:inline-block;color:var(--bg);background:var(--ac);padding:1px 5px;margin-right:6px;font-size:10px}
 .kicker{font:500 13px/1.4 var(--fm);letter-spacing:.08em;text-transform:uppercase;color:var(--mu);margin:0 0 8px}
-.mega{font:900 clamp(96px,19vw,320px)/.82 var(--fd);text-transform:uppercase;letter-spacing:-.01em;margin:0 0 0 -.04em}
+.mega{font:900 clamp(96px,15vw,260px)/.82 var(--fd);text-transform:uppercase;letter-spacing:-.01em;margin:0 0 0 -.04em}
 .mega .ln{display:block}.mega .ln+.ln{color:var(--ac)}
 .mega2{font:900 clamp(80px,14vw,220px)/.85 var(--fd);text-transform:uppercase;margin:0 0 20px -.04em}
 .xl,.xl2{font:900 clamp(56px,8vw,128px)/.88 var(--fd);text-transform:uppercase;margin:0 0 22px -.03em}
@@ -40,20 +40,22 @@ a{color:inherit}img{display:block;max-width:100%;height:auto}
 .b1{background:var(--ac);color:var(--bg)}.b2{border:1px solid var(--tx);color:var(--tx)}
 .btn::before{content:"";position:absolute;inset:0;z-index:-1;background:var(--tx);transform:scaleX(0);transform-origin:left;transition:transform .18s cubic-bezier(.65,0,.35,1)}
 .btn:hover::before{transform:scaleX(1)}.b2:hover{color:var(--bg)}
-/* hero 7/5 */
-.hero{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--g);padding:clamp(28px,5vw,72px) var(--pad) 0;align-items:end;max-width:1600px;margin:0 auto}
-.hero-txt{grid-column:1/8;padding-bottom:12px}
-.hero-ph{grid-column:8/13;margin:0;position:relative;border-top:2px solid var(--mu)}
-.hero-ph img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:50% 40%}
+/* hero (Rev 4.1): full-bleed night street, H1 in left safe space, mirror in the photo's puddle */
+.hero{position:relative;overflow:hidden;min-height:min(calc(100svh - 60px),56.25vw);display:flex;flex-direction:column;justify-content:flex-start;padding:clamp(28px,4vw,64px) var(--pad) 0}
+.hero-bg{position:absolute;inset:0;z-index:0}.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:60% 50%}
+.hero-txt,.hero-cta{position:relative;z-index:2;max-width:48%}
+.hero-cta{margin-top:auto;padding-bottom:clamp(28px,4vw,56px)}.hero-cta .lede{margin-top:0}
+.hero .kicker{color:var(--tx);opacity:.85}
+.pd-txt{position:absolute;z-index:1;left:calc(var(--pad) - .04em);top:62%;font:900 clamp(96px,15vw,260px)/.82 var(--fd);color:var(--ac);transform:scaleY(-1);transform-origin:top;opacity:.34;mix-blend-mode:screen;filter:url(#rip) blur(1.2px);white-space:nowrap;pointer-events:none}
+.hero-ill{left:auto;right:16px;bottom:16px;z-index:3;opacity:.7;background:rgba(13,14,16,.4)}
 .ill{position:absolute;left:10px;bottom:10px;font:500 11px/1 var(--fm);letter-spacing:.08em;text-transform:uppercase;background:rgba(13,14,16,.78);color:var(--tx);padding:6px 8px}
-.hero-ph figcaption{position:absolute;right:10px;top:10px;margin:0}
-/* puddle */
-.puddle{padding:0 var(--pad);max-width:1600px;margin:0 auto}
-.pd{position:relative;overflow:hidden;height:clamp(150px,22vw,330px);border-top:1px solid var(--hl)}
-.pd-img img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0;transform:scaleY(-1)}
-.pd-txt{position:absolute;left:-.04em;top:-.12em;font:900 clamp(96px,19vw,320px)/.82 var(--fd);color:var(--ac);transform:scaleY(-1);transform-origin:top;opacity:.42;mix-blend-mode:screen;filter:url(#rip) blur(1.2px);white-space:nowrap;pointer-events:none}
-.pd-gl{position:absolute;inset:0;width:100%;height:100%;display:none}
-.pd.gl .pd-gl{display:block}.pd.gl .pd-txt,.pd.gl .pd-img{visibility:hidden}
+.sign-ph{grid-column:1/8;margin:0}.sign-ph img{width:100%;border-top:2px solid var(--mu)}
+.f-sign .sign-t{grid-column:8/13}
+@media(max-width:760px){.hero{min-height:0;padding:0;display:block}
+.hero-bg{position:relative;display:block;aspect-ratio:4/5}.hero-bg img{object-position:50% 50%}
+.hero-txt{position:absolute;top:20px;left:var(--pad);right:var(--pad);max-width:none}
+.pd-txt{top:64%;font-size:26vw;left:calc(var(--pad) - .04em)}
+.hero-cta{max-width:none;padding:20px var(--pad) 28px}.hero-ill{bottom:auto;top:calc(125vw - 34px)}}
 /* shift 4/8 */
 .shift{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--g);padding:clamp(80px,12vw,180px) var(--pad);max-width:1600px;margin:0 auto}
 .s-l{grid-column:1/4;border-top:2px solid var(--ac);padding-top:14px}.s-r{grid-column:5/13}
@@ -95,20 +97,20 @@ a{color:inherit}img{display:block;max-width:100%;height:auto}
 @media(max-width:900px){
 .hero,.shift,.menu-sec,.dawn,.menu-full,.find-grid,.foot{grid-template-columns:1fr}
 .hero>*,.shift>*,.menu-sec>*,.dawn>*,.menu-full>*,.find-grid>*,.foot>*{grid-column:1/-1!important}
-.mega{font-size:26vw}.hero-ph img{aspect-ratio:4/5}.dawn-txt{margin-top:-40px}.m-r .ctas{justify-content:flex-start}
+.mega{font-size:26vw}.dawn-txt{margin-top:-40px}.m-r .ctas{justify-content:flex-start}
 .mbar{display:grid;grid-template-columns:1fr 1fr;position:fixed;left:0;right:0;bottom:0;z-index:60;background:var(--bg);border-top:1px solid var(--hl);padding:6px 6px calc(6px + env(safe-area-inset-bottom));gap:6px}
 .mbar .btn{min-height:48px;padding:0 10px}
 .rows li{flex-wrap:wrap}.dots{display:none}.nt{text-align:left;flex-basis:100%;max-width:none}.it{white-space:normal}}
 /* motion (skippable: .done kills it) */
 @media(prefers-reduced-motion:no-preference){
 .js .mega .ln{animation:rise .8s var(--ease) both}.js .mega .ln+.ln{animation-delay:.09s}
-.js .hero-ph img{animation:expose 1.1s var(--ease) both}
-.js .done .mega .ln,.js .done .hero-ph img{animation:none}
+.js .hero-bg img{animation:expose 1.4s var(--ease) both}
+.js .done .mega .ln,.js .done .hero-bg img{animation:none}
 .js .tc.roll{animation:roll .5s var(--ease) both}
-.hero-ph img,.fg-r img{transition:transform .6s var(--ease)}.hero-ph:hover img{transform:scale(1.03)}
+
 }
 @keyframes rise{from{transform:translateY(40px);clip-path:inset(0 0 100% 0)}to{transform:none;clip-path:inset(0)}}
-@keyframes expose{from{filter:brightness(.2);transform:scale(1.06)}to{filter:none;transform:none}}
+@keyframes expose{from{filter:brightness(.25);transform:scale(1.05)}to{filter:none;transform:none}}
 @keyframes roll{from{transform:translateY(8px)}to{transform:none}}
 @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.pd-txt{filter:blur(1px)}}
 /* Rev 4 frames */
