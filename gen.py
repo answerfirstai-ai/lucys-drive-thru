@@ -32,8 +32,8 @@ def head(title,desc,path,extra=""):
 <script type="application/ld+json">{json.dumps(SCHEMA)}</script>{extra}</head><body>
 <a class="skip" href="#main">Skip to content</a>'''
 def nav(cur):
-    a=lambda h,t,k:f'<a class="l{" hide-s" if k=="find" else ""}" href="{B}{h}"{" aria-current=\"page\"" if cur==k else ""}>{t}</a>'
-    return f'<nav class="nav" aria-label="Main"><a class="logo" href="{B}/" aria-label="Lucy\'s Drive Thru home">Lucy\'s</a>{a("/menu/","Menu","menu")}{a("/find-us/","Find us","find")}{cbtn("btn-g hide-s","Call")}{dbtn("btn-a","Directions")}</nav>'
+    a=lambda h,t,k,c="":f'<a class="l{c}" href="{B}{h}"{" aria-current=\"page\"" if cur==k else ""}>{t}</a>'
+    return f'<nav class="nav" aria-label="Main"><a class="logo" href="{B}/" aria-label="Lucy\'s Drive Thru home">Lucy\'s</a>{a("/menu/","Menu","menu")}{a("/#hours","Hours","x"," hide-s")}{a("/#find","Find us","find"," hide-s")}<button class="mt" type="button" data-motion aria-pressed="false" title="Turn animations off">Motion: on</button>{dbtn("btn-a","Directions")}</nav>'
 FOOT=f'''<footer><div class="wrap f-grid">
 <div><p class="logo" style="display:inline-block">Lucy's</p><p>Drive-thru and dining room on Pico.<br>Mexican, American and Salvadoran food.</p></div>
 <div><p><strong>Lucy's Drive Thru</strong><br>1568 W Pico Blvd<br>Los Angeles, CA 90015 (Pico-Union)</p><p><a href="{TEL}">(213) 384-0721</a></p></div>
@@ -49,53 +49,64 @@ ROUTE='''<svg viewBox="0 0 400 220" role="img" aria-label="Simplified line drawi
 <text x="300" y="104" fill="#fff" font-family="Barlow, sans-serif" font-weight="600" font-size="15">1568</text></svg>'''
 MAPBOX=f'<div class="mapbox" data-map><button class="btn btn-g" type="button" data-loadmap>Show the map</button></div>'
 # ---------- HOME
-cards=[("y","24","Hours a day, every day, per Lucy's listings."),("","Drive","Thru, plus a dining room and free parking per listings. <span class=\"need\">[NEED: confirm dining room]</span>"),("r","Burritos","Tacos, enchilada and combo plates, nachos."),("g","Pupusas","Salvadoran, right next to the burritos."),("","Caldos","Seafood plates, caldos and menudo."),("y","Burgers","Chili cheese fries, fish &amp; chips."),("","Cash","Reviewers say it's cash only. Bring cash to be safe.")]
-shelf="".join(f'<article class="card {c}"><p class="big">{b}</p><p>{t}</p></article>' for c,b,t in cards)
-home=head("Lucy's Drive Thru | Open 24 Hours on Pico Blvd, Los Angeles","Mexican, American and Salvadoran food at 1568 W Pico Blvd in Pico-Union: drive-thru, open 24 hours. Burritos, tacos, pupusas, burgers. Call (213) 384-0721 or get directions.","/")+nav("home")+f'''
+def pic(name,alt,big,sizes,cls="",lazy=True,small=None):
+    sm=small or (640 if name.startswith('food') else 800)
+    bw=1024 if name.startswith('food') else 1280
+    ld='loading="lazy" decoding="async"' if lazy else 'fetchpriority="high" decoding="async"'
+    w,h=(1024,768) if name.startswith('food') else (1280,720)
+    return (f'<picture class="{cls}"><source type="image/avif" srcset="{B}/assets/img/{name}-{sm}.avif {sm}w, {B}/assets/img/{name}-{big}.avif {bw}w" sizes="{sizes}">'
+            f'<source type="image/webp" srcset="{B}/assets/img/{name}-{sm}.webp {sm}w, {B}/assets/img/{name}-{big}.webp {bw}w" sizes="{sizes}">'
+            f'<img src="{B}/assets/img/{name}-{sm}.webp" alt="{alt}" width="{w}" height="{h}" {ld}></picture>')
+ILL='<span class="ill">Illustrative</span>'
+FOOD=[("food-burrito","Burritos","Carne asada and more, plus tacos, enchilada and combo plates, nachos.","Illustrative photo of a burrito (not Lucy's food)"),
+("food-pupusas","Pupusas","Salvadoran pupusas, right next to the burritos.","Illustrative photo of pupusas (not Lucy's food)"),
+("food-caldo","Caldos","Seafood plates, caldos and menudo.","Illustrative photo of a seafood soup (not Lucy's food)"),
+("food-burger","Burgers","Chili cheese fries, fish &amp; chips.","Illustrative photo of a burger and chili cheese fries (not Lucy's food)")]
+fshelf="".join(f'<article class="fcard"><div class="fimg">{pic(n,a,1024,"(max-width:809px) 80vw, 340px")}{ILL}</div><div class="fbody"><h3>{t}</h3><p>{d}</p></div></article>' for n,t,d,a in FOOD)
+fshelf+='<article class="fcard ftext"><div class="fbody"><h3>Breakfast</h3><p>Breakfast burritos and plates. Horchata and milkshakes to drink.</p><p class="mnote">Menu may vary. Call for today\'s prices.</p><a class="btn btn-a" href="'+B+'/menu/">Full menu</a></div></article>'
+home=head("Lucy's Drive Thru | Open 24 Hours on Pico Blvd, Los Angeles","Mexican, American and Salvadoran food at 1568 W Pico Blvd in Pico-Union: drive-thru, open 24 hours. Burritos, tacos, pupusas, burgers. Call (213) 384-0721 or get directions.","/",f'<link rel="preload" as="image" type="image/avif" imagesrcset="{B}/assets/img/hero-night-800.avif 800w, {B}/assets/img/hero-night-1600.avif 1280w" imagesizes="100vw" fetchpriority="high">')+nav("home")+f'''
 <main id="main">
-<section class="hero" aria-labelledby="h1"><div class="lamp" style="left:8%"></div><div class="lamp" style="right:4%"></div><div class="street" aria-hidden="true"></div>
-<div class="wrap hero-grid"><div class="hero-copy">
-<p class="open" data-hero><i></i>Open now · 24 hours</p>
-<h1 id="h1" data-hero><span class="s">Lucy's.</span>Burritos, pupusas and burgers on <span class="y">Pico.</span> Open 24 hours.</h1>
-<p class="sub" data-hero>Mexican, American and Salvadoran food. Drive through or come inside.</p>
+<section class="hero" aria-labelledby="h1"><div class="hero-media" aria-hidden="false">{pic("hero-night","Illustrative night photo of a generic roadside diner with an OPEN neon sign on wet asphalt (not Lucy's)",1600,"100vw","hero-pic",False)}{ILL}</div>
+<div class="sweep" aria-hidden="true"></div><div class="hero-shade" aria-hidden="true"></div>
+<div class="wrap hero-copy">
+<p class="open"><i></i>Open now · 24 hours</p>
+<h1 id="h1"><span class="s">Lucy's.</span>Burritos, pupusas and burgers on <span class="y">Pico.</span> Open 24 hours.</h1>
+<p class="sub">Mexican, American and Salvadoran food. Drive through or come inside.</p>
 <div class="ctas">{dbtn()}{cbtn()}</div></div>
-{SIGN}</div>
-<div class="lanes" aria-hidden="true"><span class="lane">PICO</span><span class="lane">BLVD</span></div></section>
+<a class="scroll-cue" href="#pull">Scroll</a></section>
 
-<section class="pull" id="pull" aria-labelledby="pull-h"><div class="beam" aria-hidden="true"></div><div class="beam b2" aria-hidden="true"></div>
-<div class="wrap pull-grid"><div><p class="eyebrow">Chapter 1 · Pull in</p><h2 id="pull-h">Headlights on. Window down.</h2><p class="sub" style="max-width:36ch;margin:18px 0 24px">Lucy's has a drive-thru on W Pico Blvd, and listings mention a dining room and free parking too. <span class="need">[NEED: confirm dining room + drive-thru hours]</span></p>{dbtn()}</div>
-<div class="board"><div class="board-in" data-board><div class="board-head"><span class="flap" data-flap>THE BOARD</span><span>ANY HOUR</span></div>
-<ul class="rows"><li><span>Burritos &amp; tacos</span><span>✓</span></li><li><span>Pupusas</span><span>✓</span></li><li><span>Seafood, caldos, menudo</span><span>✓</span></li><li><span>Burgers &amp; fish and chips</span><span>✓</span></li><li><span>Breakfast</span><span>✓</span></li><li class="note"><span>Menu may vary. Call for today\'s prices.</span></li></ul><p style="margin:14px 0 0"><a class="btn btn-g" href="{B}/menu/">See the full menu</a></p></div></div></div></section>
+<section class="pull" id="pull" aria-labelledby="pull-h"><div class="asphalt" aria-hidden="true"></div><div class="beam" aria-hidden="true"></div>
+<div class="wrap pull-grid"><div><p class="eyebrow">Pull in</p><h2 id="pull-h">Headlights on. Come hungry.</h2><p class="sub" style="max-width:38ch;margin:18px 0 24px">Lucy's has a drive-thru on W Pico Blvd, and listings mention a dining room and free parking too. <span class="need">[NEED: confirm dining room + drive-thru hours]</span></p>{dbtn()}</div>
+<div class="board"><div class="board-in" data-board><div class="board-head"><span>THE BOARD</span><span>ANY HOUR</span></div>
+<ul class="rows"><li><span>Burritos &amp; tacos</span><span>✓</span></li><li><span>Pupusas</span><span>✓</span></li><li><span>Seafood, caldos, menudo</span><span>✓</span></li><li><span>Burgers &amp; fish and chips</span><span>✓</span></li><li><span>Breakfast</span><span>✓</span></li><li class="note"><span>Menu may vary. Call for today's prices.</span></li></ul><p style="margin:14px 0 0"><a class="btn btn-g" href="{B}/menu/">See the full menu</a></p></div></div></div></section>
 
-<section class="shelf-sec" aria-labelledby="shelf-h"><h2 class="shelf-h" id="shelf-h">The short version. <span>Everything you need before you pull up.</span></h2>
-<div class="shelf" tabindex="0" aria-label="Quick facts, scroll sideways" data-shelf>{shelf}</div>
+<section class="shelf-sec" id="food" aria-labelledby="shelf-h"><h2 class="shelf-h" id="shelf-h">What's cooking. <span>Swipe or scroll sideways at your own pace.</span></h2>
+<div class="shelf" tabindex="0" aria-label="Food, scroll sideways" data-shelf>{fshelf}</div>
 <div class="shelf-ctrl"><button type="button" aria-label="Previous" data-sh="-1">←</button><button type="button" aria-label="Next" data-sh="1">→</button></div></section>
 
-<section class="sky" id="sky" aria-labelledby="sky-h"><h2 id="sky-h" class="skip" style="position:absolute;left:-999px">Open any hour</h2>
-<div class="layer l-dusk"></div><div class="layer l-night"></div><div class="stars" aria-hidden="true"></div><div class="layer l-dawn"></div><div class="sun" aria-hidden="true"></div><div class="skyline" aria-hidden="true"></div>
-<div class="sky-ui"><div><p class="eyebrow" style="color:#fff">Chapter 3 · Any hour</p><p class="clock" aria-hidden="true" data-clock>6 PM</p><p class="stamp">Open.</p><p class="cap" data-cap>6 PM. Open.</p>
-<p class="sr" style="position:absolute;left:-999px">6 PM. Open. 3 AM. Still open. 6 AM. Yep, open.</p></div></div></section>
+<section class="sky" id="hours" aria-labelledby="sky-h"><div class="sky-media">{pic("street-sunrise","Illustrative photo of a generic Los Angeles boulevard at sunrise (not Pico Blvd)",1600,"100vw","sky-pic")}{ILL}</div><div class="night" aria-hidden="true"></div><div class="stars" aria-hidden="true"></div>
+<div class="sky-ui"><div><p class="eyebrow" style="color:#fff">Any hour</p><h2 id="sky-h" class="clock" data-clock>3 AM</h2><p class="stamp">Open.</p><p class="cap">6 PM, 3 AM, 6 AM: open 24 hours, every day.</p></div></div></section>
 
-<section class="cash" aria-labelledby="cash-h"><div class="wrap"><p class="eyebrow" style="color:#C8312B">Bring cash</p><h2 id="cash-h">Bring cash to be safe.</h2><p>Reviewers say it's cash only. <span class="need">[NEED: confirm payment methods with Lucy's]</span> <span class="need">[NEED: confirm nearest ATM]</span></p>
-<p class="ticker" aria-hidden="true">BURRITOS · TACOS · PUPUSAS · CALDOS · BURGERS · BURRITOS · TACOS · PUPUSAS · CALDOS · BURGERS</p></div></section>
+<section class="cash" aria-labelledby="cash-h"><div class="wrap"><p class="eyebrow" style="color:#8f1f1a">Bring cash</p><h2 id="cash-h">Bring cash to be safe.</h2><p>Reviewers say it's cash only. <span class="need">[NEED: confirm payment methods with Lucy's]</span> <span class="need">[NEED: confirm nearest ATM]</span></p></div></section>
 
 <section class="find" id="find" aria-labelledby="find-h"><div class="wrap find-grid"><div><p class="eyebrow">Find us</p><h2 id="find-h">On Pico, in Pico-Union.</h2>
-<address class="nap"><strong>Lucy's Drive Thru</strong>1568 W Pico Blvd<br>Los Angeles, CA 90015<br><a href="{TEL}">(213) 384-0721</a></address><div class="ctas">{dbtn()}{cbtn()}</div></div>
+<address class="nap"><strong>Lucy's Drive Thru</strong>1568 W Pico Blvd<br>Los Angeles, CA 90015<br><a href="{TEL}">(213) 384-0721</a></address><p>Listings mention a dining area and free parking. <span class="need">[NEED: confirm dining room]</span></p><div class="ctas">{dbtn()}{cbtn()}</div></div>
 <div class="route">{ROUTE}{MAPBOX}</div></div></section>
 
-<section class="final" aria-labelledby="fin-h"><div class="wrap"><h2 id="fin-h">Hungry now? We're up.</h2><p class="sub" style="margin:14px auto 0">Open 24 hours. Bring cash to be safe.</p><div class="ctas">{dbtn()}{cbtn()}</div></div></section>
+<section class="final" aria-labelledby="fin-h"><canvas class="gl" aria-hidden="true"></canvas><div class="wrap"><h2 id="fin-h">Hungry now? We're up.</h2><p class="sub" style="margin:14px auto 0">Open 24 hours. Bring cash to be safe.</p><div class="ctas">{dbtn()}{cbtn()}</div></div></section>
 </main>'''+FOOT
 open("index.html","w").write(home)
 # ---------- MENU
+MIMG={"Mexican":"food-burrito","Salvadoran":"food-pupusas","Seafood &amp; soups":"food-caldo","American":"food-burger"}
 MCATS=[("Mexican","r",["Burritos (carne asada and more)","Tacos","Enchilada plates","Combo plates","Nachos"]),("Salvadoran","g",["Pupusas"]),("Seafood &amp; soups","",["Seafood plates","Caldos","Menudo <span class=\"need\">[NEED: confirm days]</span>"]),("American","y",["Burgers","Chili cheese fries","Fish &amp; chips"]),("Breakfast","",["Breakfast burritos","Breakfast plates"]),("Drinks","g",["Horchata","Milkshakes"])]
-shelf2="".join(f'<article class="card mcat {c}"><p class="eyebrow">{i+1:02d}</p><h2 class="big flapc" style="font-size:2rem">{t}</h2><ul class="mlist">'+"".join(f"<li>{x}</li>" for x in items)+'</ul></article>' for i,(t,c,items) in enumerate(MCATS))
+shelf2="".join(f'<article class="card mcat {c}">'+(f'<div class="fimg">{pic(MIMG[t],"Illustrative photo (not Lucy\'s food)",1024,"(max-width:809px) 80vw, 340px")}{ILL}</div>' if t in MIMG else '')+f'<p class="eyebrow">{i+1:02d}</p><h2 class="big flapc" style="font-size:2rem">{t}</h2><ul class="mlist">'+"".join(f"<li>{x}</li>" for x in items)+'</ul></article>' for i,(t,c,items) in enumerate(MCATS))
 menu=head("Menu | Lucy's Drive Thru, 24 Hours on Pico Blvd","Lucy's Drive Thru menu: burritos, tacos, pupusas, seafood, caldos, menudo, burgers, fish and chips, breakfast. 24 hours at 1568 W Pico Blvd. Call for today's prices.","/menu/")+nav("menu")+f'''
 <main id="main"><section class="page-hero"><div class="wrap"><p class="eyebrow">The board</p><h1>Mexican, American and <span style="color:var(--primary)">Salvadoran.</span> Any hour.</h1>
 <p class="sub" style="max-width:52ch;margin:18px 0 0">Burritos, tacos, pupusas, caldos, burgers and breakfast, around the clock.</p>
 <p class="mnote">Menu may vary. Call for today's prices.</p>
 <div class="ctas" style="margin-top:24px">{cbtn("btn-a","Call for today's prices")}{dbtn("btn-g")}</div>
 <p style="margin-top:18px">Reviewers say it's cash only. Bring cash to be safe.</p></div></section>
-<section class="shelf-sec" style="padding-top:20px" aria-label="Menu categories"><h2 class="shelf-h">Six boards. <span>Swipe through.</span></h2>
+<section class="shelf-sec" style="padding-top:20px" aria-label="Menu categories"><h2 class="shelf-h">Six boards. <span>Scroll sideways at your own pace.</span></h2>
 <div class="shelf mshelf" tabindex="0" aria-label="Menu categories, scroll sideways" data-shelf>{shelf2}</div>
 <div class="shelf-ctrl"><button type="button" aria-label="Previous" data-sh="-1">←</button><button type="button" aria-label="Next" data-sh="1">→</button></div>
 <div class="wrap"><p class="mnote" style="margin-top:30px">Menu may vary. Call for today's prices. Items gathered from public listings; <span class="need">[NEED: confirm full menu with Lucy's]</span></p></div></section></main>'''+FOOT

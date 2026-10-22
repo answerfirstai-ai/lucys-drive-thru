@@ -1,59 +1,71 @@
 (()=>{
 const $=(s,c=document)=>c.querySelector(s),$$=(s,c=document)=>[...c.querySelectorAll(s)];
-// micro: button label feedback
+const root=document.documentElement;
+const prm=matchMedia('(prefers-reduced-motion: reduce)');
+let userOff=localStorage.getItem('lucys-motion')==='off';
+const motionOK=()=>!prm.matches&&!userOff;
+// micro feedback (never blocks navigation)
 $$('[data-dir]').forEach(a=>a.addEventListener('click',()=>{const l=$('.lbl',a);if(!l)return;const t=l.textContent;l.textContent='Opening Maps…';setTimeout(()=>l.textContent=t,1600)}));
 $$('[data-call]').forEach(a=>a.addEventListener('click',()=>{const l=$('.lbl',a);if(!l)return;const t=l.textContent;l.textContent='Calling…';setTimeout(()=>l.textContent=t,1600)}));
-// shelf buttons
-const sh=$('[data-shelf]');$$('[data-sh]').forEach(b=>b.addEventListener('click',()=>sh&&sh.scrollBy({left:+b.dataset.sh*sh.clientWidth*.8,behavior:'smooth'})));
-// click-to-load map
+const sh=$('[data-shelf]');$$('[data-sh]').forEach(b=>b.addEventListener('click',()=>sh&&sh.scrollBy({left:+b.dataset.sh*sh.clientWidth*.8,behavior:motionOK()?'smooth':'auto'})));
 $$('[data-loadmap]').forEach(b=>b.addEventListener('click',()=>{const f=document.createElement('iframe');f.title="Map of Lucy's Drive Thru, 1568 W Pico Blvd";f.loading='lazy';f.referrerPolicy='no-referrer-when-downgrade';f.src='https://maps.google.com/maps?q=Lucy%27s%20Drive%20Thru%2C%201568%20W%20Pico%20Blvd%2C%20Los%20Angeles%2C%20CA%2090015&z=16&output=embed';b.parentNode.replaceChildren(f)}));
-const g=window.gsap;if(!g||!window.ScrollTrigger){$$('.sign .box').forEach(b=>b.style.opacity=1);const sg=$('.sign');sg&&sg.classList.add('lit');return}
-g.registerPlugin(ScrollTrigger);ScrollTrigger.config({ignoreMobileResize:true});
-const mm=g.matchMedia();
-mm.add({isDesktop:'(min-width: 810px)',isMobile:'(max-width: 809px)',reduce:'(prefers-reduced-motion: reduce)'},ctx=>{
- const {isDesktop,reduce}=ctx.conditions, boxes=$$('.sign [data-box]');
- if(reduce){g.set(boxes,{opacity:1});$('.sign').classList.add('lit');return}
- // hero entrance: fluorescent tubes
- if(boxes.length){
-  const tl=g.timeline({defaults:{ease:'power2.out'}});
-  tl.from('.hero',{backgroundColor:'#000',duration:.4,ease:'none'})
-   .to(boxes,{keyframes:{opacity:[0,1,.3,1,.6,1]},duration:.55,ease:'none',stagger:.2,onStart(){} },.25)
-   .add(()=>$('.sign').classList.add('lit'),1.05)
-   .from('[data-hero]',{y:24,opacity:0,duration:.5,stagger:.08,ease:'power3.out'},.6)
-   .from('.hero .ctas .btn',{scale:.9,opacity:0,duration:.4,stagger:.08,ease:'back.out(1.6)'},1.1)
-   .from('.lane',{clipPath:'inset(0 100% 0 0)',duration:.5,stagger:.12,ease:'power1.inOut'},1.3);
-  // idle flicker of OPEN 24 HOURS
-  let idle;const flick=()=>{idle=g.delayedCall(6+Math.random()*4,()=>{g.fromTo(boxes[0],{opacity:.25},{opacity:1,duration:.15,repeat:1,yoyo:true,ease:'steps(1)',onComplete:()=>g.set(boxes[0],{opacity:1})});flick()})};
-  ScrollTrigger.create({trigger:'.hero',start:'top top',end:'bottom top',onToggle:s=>{idle&&idle.kill();if(s.isActive)flick()}});
-  if(matchMedia('(pointer:fine)').matches)boxes.forEach(b=>b.addEventListener('mouseenter',()=>g.fromTo(b,{opacity:.3},{opacity:1,duration:.3,ease:'steps(3)'})));
- }
- // ch1 pull in
- if($('#pull')){
-  const t=g.timeline({scrollTrigger:{trigger:'#pull',start:'top top',end:isDesktop?'+=120%':'+=60%',pin:true,scrub:.6}});
-  t.fromTo('.beam',{x:'-60vw',opacity:0},{x:'60vw',opacity:1,duration:1,stagger:.25,ease:'none'},0)
-   .to('.beam',{opacity:0,duration:.2},.9)
-   .from('[data-board]',{x:'40vw',rotateY:-12,opacity:0,duration:.6,ease:'power2.out'},.1);
-  const f=$('[data-flap]');if(f){f.innerHTML=[...f.textContent].map(c=>`<span>${c===' '?'&nbsp;':c}</span>`).join('');
-   ScrollTrigger.create({trigger:'[data-board]',start:'top 75%',once:true,onEnter:()=>g.from($$('span',f),{rotateX:90,opacity:0,duration:.25,stagger:.03,ease:'power2.in'})})}
-  g.from('.rows li',{opacity:0,x:20,stagger:.06,scrollTrigger:{trigger:'#pull',start:'top 40%',toggleActions:'play none none reverse'}});
- }
- // ch3 sky: dusk -> 3AM -> sunrise
- if($('#sky')){
-  const clock=$('[data-clock]'),cap=$('[data-cap]'),hrs=['6 PM','7 PM','8 PM','9 PM','10 PM','11 PM','12 AM','1 AM','2 AM','3 AM','4 AM','5 AM','6 AM'];
-  const caps=p=>p<.4?'6 PM. Open.':p<.75?'3 AM. Still open.':'6 AM. Yep, open.';
-  const s=g.timeline({scrollTrigger:{trigger:'#sky',start:'top top',end:isDesktop?'+=200%':'+=140%',pin:true,scrub:isDesktop?1:true,
-   onUpdate:st=>{const i=Math.round(st.progress*12);if(clock.textContent!==hrs[i])clock.textContent=hrs[i];const c=hrs[i]+'. '+(i===0?'Open.':i===12?'Yep, open.':'Still open.');if(cap.textContent!==c)cap.textContent=c}}});
-  s.to('.l-night',{opacity:1,duration:4,ease:'none'},0).to('.stars',{opacity:1,duration:3,ease:'none'},1.5)
-   .to('.stars',{opacity:0,duration:2,ease:'none'},7).to('.l-dawn',{opacity:1,duration:3.5,ease:'none'},7.5)
-   .to('.sun',{y:0,duration:3.5,ease:'power1.out'},8.5).to('.stamp',{rotate:4,scale:1.06,duration:1,yoyo:true,repeat:5,ease:'sine.inOut'},0);
- }
- // pico line draw + pin drop
- $$('.route').forEach(r=>{g.fromTo($('.pico',r),{strokeDashoffset:400},{strokeDashoffset:0,ease:'none',scrollTrigger:{trigger:r,start:'top 85%',end:'top 35%',scrub:true}});
-  g.from($('.pin',r),{y:-60,opacity:0,duration:.9,ease:'bounce.out',scrollTrigger:{trigger:r,start:'top 50%'}})});
- // menu reveals
- if($('.mcat')){g.from('.mcat',{y:60,opacity:0,rotateX:-14,transformPerspective:900,duration:.7,stagger:.09,ease:'power3.out',scrollTrigger:{trigger:'.mshelf',start:'top 85%'}});$$('.mcat').forEach(cd=>g.from($$('.mlist li',cd),{x:-16,opacity:0,stagger:.05,duration:.35,delay:.3,scrollTrigger:{trigger:cd,start:'top 85%'}}))}
- // reveals
- $$('.shelf-h,.cash h2,.find h2,.final h2,.page-hero h1').forEach(el=>g.from(el,{y:40,opacity:0,duration:.7,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 88%'}}));
- g.to('.ticker',{xPercent:-30,ease:'none',scrollTrigger:{trigger:'.cash',start:'top bottom',end:'bottom top',scrub:true}});
-});
+// motion toggle
+const mbtn=$('[data-motion]');
+const paintBtn=()=>{if(!mbtn)return;mbtn.setAttribute('aria-pressed',String(!motionOK()));mbtn.textContent='Motion: '+(motionOK()?'on':'off');mbtn.title=motionOK()?'Turn animations off':'Turn animations on'};
+let mm,glStop;
+const g=window.gsap;
+function stopAll(){root.classList.add('no-motion');if(mm){mm.revert();mm=null}if(glStop)glStop();if(window.ScrollTrigger)ScrollTrigger.getAll().forEach(t=>t.kill())}
+function startAll(){root.classList.remove('no-motion');if(!g||!window.ScrollTrigger)return;g.registerPlugin(ScrollTrigger);ScrollTrigger.config({ignoreMobileResize:true});
+ mm=g.matchMedia();
+ mm.add({isDesktop:'(min-width: 810px)',reduce:'(prefers-reduced-motion: reduce)'},ctx=>{
+  const {isDesktop,reduce}=ctx.conditions; if(reduce)return;
+  // Hero: scroll-linked parallax only (no pin). Content is never hidden.
+  if($('.hero')){
+   g.to('.hero-media',{yPercent:12,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
+   g.to('.hero-copy',{yPercent:-10,ease:'none',scrollTrigger:{trigger:'.hero',start:'top top',end:'bottom top',scrub:true}});
+  }
+  // Headlights: light sweep across the board while it passes (no pin)
+  if($('#pull')){
+   g.fromTo('.beam',{x:'-50vw',opacity:0},{x:'50vw',opacity:1,ease:'none',scrollTrigger:{trigger:'#pull',start:'top 80%',end:'bottom 20%',scrub:true}});
+   g.fromTo('[data-board]',{rotateY:-8,transformPerspective:1200},{rotateY:0,ease:'none',scrollTrigger:{trigger:'#pull',start:'top 90%',end:'center center',scrub:true}});
+  }
+  // Sky: night lifts to sunrise as the section passes; camera push-in. No pin.
+  if($('#hours')){
+   const clock=$('[data-clock]'),hrs=['6 PM','8 PM','10 PM','12 AM','2 AM','3 AM','4 AM','5 AM','6 AM'];
+   g.timeline({scrollTrigger:{trigger:'#hours',start:'top bottom',end:'bottom top',scrub:true,
+    onUpdate:st=>{const i=Math.min(hrs.length-1,Math.max(0,Math.round((st.progress-.15)/.7*(hrs.length-1))));if(clock.textContent!==hrs[i])clock.textContent=hrs[i]}}})
+    .fromTo('.night',{opacity:.92},{opacity:.15,ease:'none'},0).fromTo('.stars',{opacity:.9},{opacity:0,ease:'none'},0)
+    .fromTo('.sky-pic',{scale:1.15,yPercent:-6},{scale:1,yPercent:6,ease:'none'},0);
+  }
+  $$('.route').forEach(r=>g.fromTo($('.pico',r),{strokeDashoffset:400},{strokeDashoffset:0,ease:'none',scrollTrigger:{trigger:r,start:'top 90%',end:'top 40%',scrub:true}}));
+  // Subtle reveals: transform only, content stays readable/clickable
+  $$('.shelf-h,.cash h2,.find h2,.final h2,.mcat,.fcard').forEach(el=>g.from(el,{y:24,duration:.5,ease:'power2.out',scrollTrigger:{trigger:el,start:'top 95%',once:true}}));
+ });
+ if(matchMedia('(min-width: 1024px) and (pointer:fine)').matches)loadGL();
+}
+// three.js PBR accent: desktop only, lazy, decorative, pauses off-screen
+function loadGL(){const cv=$('.gl');if(!cv||glStop)return;
+ const io=new IntersectionObserver(async es=>{if(!es[0].isIntersecting||glStop)return;io.disconnect();
+  try{const T=await import('https://cdn.jsdelivr.net/npm/three@0.169.0/build/three.module.min.js');
+   const {RoomEnvironment}=await import('https://cdn.jsdelivr.net/npm/three@0.169.0/examples/jsm/environments/RoomEnvironment.js/+esm');
+   const r=new T.WebGLRenderer({canvas:cv,antialias:true,alpha:true});r.setPixelRatio(Math.min(devicePixelRatio,1.5));
+   const sc=new T.Scene(),cam=new T.PerspectiveCamera(35,1,.1,100);cam.position.set(0,0,9);
+   const pm=new T.PMREMGenerator(r);sc.environment=pm.fromScene(new RoomEnvironment(),.04).texture;
+   const glass=new T.MeshPhysicalMaterial({color:0xffd27a,emissive:0xffb238,emissiveIntensity:1.6,roughness:.15,transmission:.4,thickness:.5,clearcoat:1});
+   const steel=new T.MeshStandardMaterial({color:0x9aa3b5,metalness:1,roughness:.28});
+   const grp=new T.Group();const tube=new T.Mesh(new T.TorusGeometry(1.6,.09,24,120),glass);const ring=new T.Mesh(new T.TorusGeometry(1.85,.05,16,120),steel);
+   const tube2=new T.Mesh(new T.TorusGeometry(1.2,.07,24,100),glass);tube2.rotation.x=1.2;grp.add(tube,ring,tube2);sc.add(grp);
+   const pl=new T.PointLight(0xffb238,30,20);pl.position.set(2,1,3);sc.add(pl);
+   let run=true,raf;const size=()=>{const w=cv.clientWidth,h=cv.clientHeight;r.setSize(w,h,false);cam.aspect=w/h;cam.updateProjectionMatrix();grp.position.x=w>h?3.2:0};size();addEventListener('resize',size);
+   const vis=new IntersectionObserver(e=>{run=e[0].isIntersecting;if(run)loop()});vis.observe(cv);
+   const loop=()=>{if(!run||glStop===null)return;grp.rotation.y+=.004;grp.rotation.z+=.0015;r.render(sc,cam);raf=requestAnimationFrame(loop)};
+   cv.classList.add('on');loop();glStop=()=>{run=false;cancelAnimationFrame(raf);cv.classList.remove('on');vis.disconnect();glStop=undefined};
+  }catch(e){/* decorative only */}
+ },{rootMargin:'200px'});io.observe(cv);glStop=undefined}
+paintBtn();
+if(motionOK())startAll();else root.classList.add('no-motion');
+mbtn&&mbtn.addEventListener('click',()=>{userOff=motionOK();localStorage.setItem('lucys-motion',userOff?'off':'on');if(userOff)stopAll();else startAll();paintBtn()});
+prm.addEventListener&&prm.addEventListener('change',()=>{paintBtn();if(!motionOK())stopAll();else startAll()});
+// Esc skips all motion instantly
+addEventListener('keydown',e=>{if(e.key==='Escape'&&motionOK()){userOff=true;localStorage.setItem('lucys-motion','off');stopAll();paintBtn()}});
 })();
