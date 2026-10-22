@@ -45,14 +45,14 @@ def board(rows,h="h-board"):
   return f'''<div class="board" role="group" aria-labelledby="{h}"><div class="board-in"><p class="board-top" aria-hidden="true"><span>LUCY'S</span><span>24 HRS</span></p><h2 class="board-h" id="{h}">El menú</h2><ul class="rows">{r}</ul><p class="board-note">Menu may vary. Call for today's prices.</p></div></div>'''
 tc=lambda t:f'<p class="tc"><span class="rec" aria-hidden="true">REC</span> {t}</p>'
 ILL='<span class="ill">Illustrative scene</span>'
-home=head(TITLE,DESC,"",f'<link rel="preload" as="image" type="image/avif" imagesrcset="{B}assets/img/sodium_sky-480.avif 480w, {B}assets/img/sodium_sky-768.avif 768w" imagesizes="(min-width:900px) 38vw, 100vw" fetchpriority="high">')+f'''
+home=head(TITLE,DESC,"",f'<link rel="preload" as="image" type="image/avif" media="(min-width:901px)" imagesrcset="{B}assets/img/hero_pico-d400.avif 400w, {B}assets/img/hero_pico-d768.avif 768w" imagesizes="38vw" fetchpriority="high"><link rel="preload" as="image" type="image/avif" media="(max-width:900px)" imagesrcset="{B}assets/img/hero_pico-m400.avif 400w, {B}assets/img/hero_pico-m768.avif 768w" imagesizes="100vw" fetchpriority="high">')+f'''
 <section class="hero" aria-labelledby="h1">
 <div class="hero-txt"><p class="tc live"><span class="rec" aria-hidden="true">REC</span> <span data-clock aria-hidden="true">03:07:12 AM</span> · 1568 W PICO BLVD · PICO-UNION</p>
 <h2 class="kicker">24-hour tacos and burritos on Pico Blvd</h2>
 <h1 id="h1" class="mega"><span class="ln">Still</span><span class="ln">on.</span></h1>
 <p class="lede">Burritos, pupusas, menudo. Every hour, every night.</p>
 <div class="ctas">{CALL}{DIRB}</div></div>
-<figure class="hero-ph">{pic("sodium_sky",[480,768],"(min-width:900px) 38vw, 100vw","Illustrative scene: a sodium streetlight in drizzle against the night sky",768,1024,False)}{ILL}<figcaption class="tc sm">CAM 01 · LOOKING UP</figcaption></figure>
+<figure class="hero-ph"><picture><source media="(max-width:900px)" type="image/avif" srcset="{B}assets/img/hero_pico-m400.avif 400w, {B}assets/img/hero_pico-m768.avif 768w" sizes="100vw"><source media="(max-width:900px)" type="image/webp" srcset="{B}assets/img/hero_pico-m400.webp 400w, {B}assets/img/hero_pico-m768.webp 768w" sizes="100vw"><source type="image/avif" srcset="{B}assets/img/hero_pico-d400.avif 400w, {B}assets/img/hero_pico-d768.avif 768w" sizes="38vw"><source type="image/webp" srcset="{B}assets/img/hero_pico-d400.webp 400w, {B}assets/img/hero_pico-d768.webp 768w" sizes="38vw"><img src="{B}assets/img/hero_pico-d768.webp" alt="Illustrative scene: a sodium streetlight and palms reflected in a rain puddle on an empty LA boulevard at night" width="768" height="1024" fetchpriority="high" decoding="async"></picture>{ILL}<figcaption class="tc sm">CAM 01 · W PICO, WET</figcaption></figure>
 </section>
 <section class="puddle" aria-label="Reflection of the words Still on in a wet street">
 <div class="pd" data-puddle>{pic("puddle",[640,1024],"100vw","",1024,576,True,"pd-img")}<div class="pd-txt" aria-hidden="true">STILL ON.</div><canvas class="pd-gl" aria-hidden="true"></canvas>{ILL}</div>

@@ -44,7 +44,7 @@ a{color:inherit}img{display:block;max-width:100%;height:auto}
 .hero{display:grid;grid-template-columns:repeat(12,1fr);gap:var(--g);padding:clamp(28px,5vw,72px) var(--pad) 0;align-items:end;max-width:1600px;margin:0 auto}
 .hero-txt{grid-column:1/8;padding-bottom:12px}
 .hero-ph{grid-column:8/13;margin:0;position:relative;border-top:2px solid var(--mu)}
-.hero-ph img{width:100%;aspect-ratio:3/4;object-fit:cover}
+.hero-ph img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:50% 40%}
 .ill{position:absolute;left:10px;bottom:10px;font:500 11px/1 var(--fm);letter-spacing:.08em;text-transform:uppercase;background:rgba(13,14,16,.78);color:var(--tx);padding:6px 8px}
 .hero-ph figcaption{position:absolute;right:10px;top:10px;margin:0}
 /* puddle */
