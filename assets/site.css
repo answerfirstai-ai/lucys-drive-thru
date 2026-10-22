@@ -127,3 +127,7 @@ footer a{color:#fff}
 .cats{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:18px;margin:30px 0 80px}
 /* reduced motion */
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.js-motion .sign .box{opacity:1}.beam{display:none}}
+.mshelf{grid-auto-columns:min(340px,82vw)}.mcat{min-height:320px;justify-content:flex-start;gap:6px}.mcat .eyebrow{margin:0;color:inherit;opacity:.7}
+.mlist{list-style:none;margin:14px 0 0;padding:0;font:700 1.35rem/1.15 var(--f-menu)}.mlist li{padding:9px 0;border-bottom:1px dashed currentColor;border-color:rgba(255,255,255,.18)}.card.y .mlist li{border-color:rgba(20,26,51,.2)}
+.mnote{display:inline-block;margin-top:18px;font:700 1.05rem/1.2 var(--f-menu);letter-spacing:.06em;text-transform:uppercase;color:var(--primary);border:2px dashed var(--primary);padding:8px 14px;border-radius:var(--r-sm)}
+.rows li.note{font-size:1rem;color:var(--primary);border-bottom:0}

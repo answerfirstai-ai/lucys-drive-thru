@@ -6,18 +6,18 @@ ICO_P='<svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="
 ICO_D='<svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M21.7 11.3 12.7 2.3a1 1 0 0 0-1.4 0l-9 9a1 1 0 0 0 0 1.4l9 9a1 1 0 0 0 1.4 0l9-9a1 1 0 0 0 0-1.4zM14 14.5V12h-4v3H8v-4a1 1 0 0 1 1-1h5V7.5l3.5 3.5z"/></svg>'
 def dbtn(cls="btn-a",lbl="Get directions"): return f'<a class="btn {cls}" data-dir href="{DIR}" target="_blank" rel="noopener">{ICO_D}<span class="lbl">{lbl}</span></a>'
 def cbtn(cls="btn-g",lbl="Call (213) 384-0721"): return f'<a class="btn {cls}" data-call href="{TEL}">{ICO_P}<span class="lbl">{lbl}</span></a>'
-SIGN='''<svg class="sign" viewBox="0 0 300 470" role="img" aria-labelledby="sgt"><title id="sgt">Illustration of Lucy's pole sign: Open 24 Hours, Lucy's Drive Thru, Mexican and American Food</title>
+SIGN='''<svg class="sign" viewBox="0 0 300 470" role="img" aria-labelledby="sgt"><title id="sgt">Illustration: a lit roadside sign reading Lucy's Drive Thru</title>
 <rect class="pole" x="138" y="330" width="24" height="140"/>
-<g class="box" data-box><rect x="50" y="8" width="200" height="56" rx="6" fill="#F2D43A" stroke="#C8312B" stroke-width="3"/><text x="150" y="45" text-anchor="middle" font-family="Bowlby One, Impact, sans-serif" font-size="19" fill="#C8312B">OPEN 24 HOURS</text></g>
+<g class="box" data-box><rect x="50" y="8" width="200" height="56" rx="6" fill="#F2D43A" stroke="#C8312B" stroke-width="3"/><text x="150" y="45" text-anchor="middle" font-family="Bowlby One, Impact, sans-serif" font-size="26" fill="#C8312B">OPEN</text></g>
 <g class="box" data-box><rect x="40" y="76" width="220" height="104" rx="8" fill="#fff" stroke="#1F7A3A" stroke-width="4"/><text x="150" y="138" text-anchor="middle" font-family="Yellowtail, cursive" font-size="62" fill="#C8312B">Lucy's</text><text x="150" y="168" text-anchor="middle" font-family="Barlow Condensed, Arial Narrow, sans-serif" font-weight="700" font-size="24" letter-spacing="4" fill="#1F7A3A">DRIVE THRU</text></g>
-<g class="box" data-box><rect x="10" y="192" width="280" height="138" rx="8" fill="#F2D43A" stroke="#C8312B" stroke-width="4"/><text text-anchor="middle" font-family="Bowlby One, Impact, sans-serif" fill="#C8312B"><tspan x="150" y="244" font-size="36">MEXICAN</tspan><tspan x="150" y="278" font-size="21">AND AMERICAN</tspan><tspan x="150" y="314" font-size="38">FOOD</tspan></text></g>
+<g class="box" data-box><rect x="10" y="192" width="280" height="138" rx="8" fill="#F2D43A" stroke="#C8312B" stroke-width="4"/><text text-anchor="middle" font-family="Bowlby One, Impact, sans-serif" fill="#C8312B"><tspan x="150" y="250" font-size="30">TACOS</tspan><tspan x="150" y="284" font-size="26">BURRITOS</tspan><tspan x="150" y="318" font-size="30">PUPUSAS</tspan></text></g>
 </svg>'''
 SCHEMA={"@context":"https://schema.org","@type":"Restaurant","@id":SITE+"/#restaurant","name":"Lucy's Drive Thru","url":SITE+"/","telephone":"+1-213-384-0721",
 "address":{"@type":"PostalAddress","streetAddress":"1568 W Pico Blvd","addressLocality":"Los Angeles","addressRegion":"CA","postalCode":"90015","addressCountry":"US"},
 "geo":{"@type":"GeoCoordinates","latitude":34.0443442,"longitude":-118.2768267},
 "hasMap":"https://www.google.com/maps/place/?q=place_id:ChIJN43S4pXHwoAR_sz0JYM8-tQ",
 "openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],"opens":"00:00","closes":"23:59"}],
-"servesCuisine":["Mexican","American"],"paymentAccepted":"Cash","priceRange":"$","areaServed":"Pico-Union, Los Angeles","image":SITE+"/assets/og.png",
+"servesCuisine":["Mexican","American","Salvadoran"],"hasMenu":SITE+"/menu/","priceRange":"$","areaServed":"Pico-Union, Los Angeles","image":SITE+"/assets/og.png",
 "sameAs":["https://la.eater.com/venue/31256/lucy-s-drive-thru","https://www.yelp.com/biz/lucys-drive-thru-los-angeles"]}
 def head(title,desc,path,extra=""):
     return f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -35,10 +35,10 @@ def nav(cur):
     a=lambda h,t,k:f'<a class="l{" hide-s" if k=="find" else ""}" href="{B}{h}"{" aria-current=\"page\"" if cur==k else ""}>{t}</a>'
     return f'<nav class="nav" aria-label="Main"><a class="logo" href="{B}/" aria-label="Lucy\'s Drive Thru home">Lucy\'s</a>{a("/menu/","Menu","menu")}{a("/find-us/","Find us","find")}{cbtn("btn-g hide-s","Call")}{dbtn("btn-a","Directions")}</nav>'
 FOOT=f'''<footer><div class="wrap f-grid">
-<div><p class="logo" style="display:inline-block">Lucy's</p><p>Drive-thru on Pico.<br>Mexican and American food.</p></div>
+<div><p class="logo" style="display:inline-block">Lucy's</p><p>Drive-thru and dining room on Pico.<br>Mexican, American and Salvadoran food.</p></div>
 <div><p><strong>Lucy's Drive Thru</strong><br>1568 W Pico Blvd<br>Los Angeles, CA 90015 (Pico-Union)</p><p><a href="{TEL}">(213) 384-0721</a></p></div>
-<div><p><span class="open"><i></i>Open 24 hours, every day</span></p><p><span class="need">[NEED: confirm holiday hours]</span></p><p><strong>Cash only.</strong></p></div>
-<div><p>Also listed on <a href="https://la.eater.com/venue/31256/lucy-s-drive-thru" rel="noopener" target="_blank">Eater LA</a>.</p><p><a href="{B}/menu/">Menu</a> · <a href="{B}/find-us/">Find us</a></p><p style="opacity:.6;font-size:.85rem">Sign artwork is an illustration based on Lucy's real pole sign.</p></div>
+<div><p><span class="open"><i></i>Open 24 hours, every day</span></p><p><span class="need">[NEED: confirm holiday hours]</span></p><p>Reviewers say it's cash only. Bring cash to be safe.</p></div>
+<div><p>Also listed on <a href="https://la.eater.com/venue/31256/lucy-s-drive-thru" rel="noopener" target="_blank">Eater LA</a>.</p><p><a href="{B}/menu/">Menu</a> · <a href="{B}/find-us/">Find us</a></p><p style="opacity:.6;font-size:.85rem">Sign artwork is an illustration.</p></div>
 </div></footer>
 <div class="mbar" role="group" aria-label="Quick actions">{dbtn("btn-a","Directions")}{cbtn("btn-g","Call")}</div>
 <script src="{B}/assets/js/gsap.min.js" defer></script><script src="{B}/assets/js/ScrollTrigger.min.js" defer></script><script src="{B}/assets/js/app.js" defer></script></body></html>'''
@@ -49,23 +49,23 @@ ROUTE='''<svg viewBox="0 0 400 220" role="img" aria-label="Simplified line drawi
 <text x="300" y="104" fill="#fff" font-family="Barlow, sans-serif" font-weight="600" font-size="15">1568</text></svg>'''
 MAPBOX=f'<div class="mapbox" data-map><button class="btn btn-g" type="button" data-loadmap>Show the map</button></div>'
 # ---------- HOME
-cards=[("y","24","Hours a day. Every day. Pull up whenever."),("","Cash","Only, at the window. Bring it and you're set."),("g","Drive","Thru. Stay in the car, roll down the window."),("r","Mexican","Food, right on the sign."),("","American","Food too. Says so in yellow."),("y","Pico","1568 W Pico Blvd, Pico-Union."),("","Menu","<span class=\"need\">[NEED: real menu + photos from Lucy's]</span>")]
+cards=[("y","24","Hours a day, every day, per Lucy's listings."),("","Drive","Thru, plus a dining room and free parking per listings. <span class=\"need\">[NEED: confirm dining room]</span>"),("r","Burritos","Tacos, enchilada and combo plates, nachos."),("g","Pupusas","Salvadoran, right next to the burritos."),("","Caldos","Seafood plates, caldos and menudo."),("y","Burgers","Chili cheese fries, fish &amp; chips."),("","Cash","Reviewers say it's cash only. Bring cash to be safe.")]
 shelf="".join(f'<article class="card {c}"><p class="big">{b}</p><p>{t}</p></article>' for c,b,t in cards)
-home=head("Lucy's Drive Thru | Open 24 Hours on Pico Blvd, Los Angeles","Mexican and American food drive-thru at 1568 W Pico Blvd in Pico-Union, open 24 hours. Cash only. Call (213) 384-0721 or get directions.","/")+nav("home")+f'''
+home=head("Lucy's Drive Thru | Open 24 Hours on Pico Blvd, Los Angeles","Mexican, American and Salvadoran food at 1568 W Pico Blvd in Pico-Union: drive-thru, open 24 hours. Burritos, tacos, pupusas, burgers. Call (213) 384-0721 or get directions.","/")+nav("home")+f'''
 <main id="main">
 <section class="hero" aria-labelledby="h1"><div class="lamp" style="left:8%"></div><div class="lamp" style="right:4%"></div><div class="street" aria-hidden="true"></div>
 <div class="wrap hero-grid"><div class="hero-copy">
 <p class="open" data-hero><i></i>Open now · 24 hours</p>
-<h1 id="h1" data-hero><span class="s">Lucy's.</span>Mexican and American food on <span class="y">Pico.</span> Open 24 hours.</h1>
-<p class="sub" data-hero>Pull up any time. Bring cash.</p>
+<h1 id="h1" data-hero><span class="s">Lucy's.</span>Burritos, pupusas and burgers on <span class="y">Pico.</span> Open 24 hours.</h1>
+<p class="sub" data-hero>Mexican, American and Salvadoran food. Drive through or come inside.</p>
 <div class="ctas">{dbtn()}{cbtn()}</div></div>
 {SIGN}</div>
-<div class="lanes" aria-hidden="true"><span class="lane">24 HRS</span><span class="lane">CASH ONLY</span></div></section>
+<div class="lanes" aria-hidden="true"><span class="lane">PICO</span><span class="lane">BLVD</span></div></section>
 
 <section class="pull" id="pull" aria-labelledby="pull-h"><div class="beam" aria-hidden="true"></div><div class="beam b2" aria-hidden="true"></div>
-<div class="wrap pull-grid"><div><p class="eyebrow">Chapter 1 · Pull in</p><h2 id="pull-h">Headlights on. Window down.</h2><p class="sub" style="max-width:36ch;margin:18px 0 24px">Lucy's is a drive-thru on W Pico Blvd. Order from the car, any hour.</p>{dbtn()}</div>
-<div class="board"><div class="board-in" data-board><div class="board-head"><span class="flap" data-flap>THE BOARD</span><span>CASH ONLY</span></div>
-<ul class="rows"><li><span>Mexican food</span><span>✓</span></li><li><span>American food</span><span>✓</span></li><li><span>Open 24 hours</span><span>✓</span></li><li><span>Cards</span><span>✗</span></li><li><span class="need">[NEED: menu items + prices from Lucy's]</span></li></ul></div></div></div></section>
+<div class="wrap pull-grid"><div><p class="eyebrow">Chapter 1 · Pull in</p><h2 id="pull-h">Headlights on. Window down.</h2><p class="sub" style="max-width:36ch;margin:18px 0 24px">Lucy's has a drive-thru on W Pico Blvd, and listings mention a dining room and free parking too. <span class="need">[NEED: confirm dining room + drive-thru hours]</span></p>{dbtn()}</div>
+<div class="board"><div class="board-in" data-board><div class="board-head"><span class="flap" data-flap>THE BOARD</span><span>ANY HOUR</span></div>
+<ul class="rows"><li><span>Burritos &amp; tacos</span><span>✓</span></li><li><span>Pupusas</span><span>✓</span></li><li><span>Seafood, caldos, menudo</span><span>✓</span></li><li><span>Burgers &amp; fish and chips</span><span>✓</span></li><li><span>Breakfast</span><span>✓</span></li><li class="note"><span>Menu may vary. Call for today\'s prices.</span></li></ul><p style="margin:14px 0 0"><a class="btn btn-g" href="{B}/menu/">See the full menu</a></p></div></div></div></section>
 
 <section class="shelf-sec" aria-labelledby="shelf-h"><h2 class="shelf-h" id="shelf-h">The short version. <span>Everything you need before you pull up.</span></h2>
 <div class="shelf" tabindex="0" aria-label="Quick facts, scroll sideways" data-shelf>{shelf}</div>
@@ -76,31 +76,35 @@ home=head("Lucy's Drive Thru | Open 24 Hours on Pico Blvd, Los Angeles","Mexican
 <div class="sky-ui"><div><p class="eyebrow" style="color:#fff">Chapter 3 · Any hour</p><p class="clock" aria-hidden="true" data-clock>6 PM</p><p class="stamp">Open.</p><p class="cap" data-cap>6 PM. Open.</p>
 <p class="sr" style="position:absolute;left:-999px">6 PM. Open. 3 AM. Still open. 6 AM. Yep, open.</p></div></div></section>
 
-<section class="cash" aria-labelledby="cash-h"><div class="wrap"><p class="eyebrow" style="color:#C8312B">Bring cash</p><h2 id="cash-h">Cash only at the window.</h2><p>Plan ahead and you're set. <span class="need">[NEED: confirm nearest ATM]</span></p>
-<p class="ticker" aria-hidden="true">CASH ONLY · 24 HRS · CASH ONLY · 24 HRS · CASH ONLY · 24 HRS · CASH ONLY · 24 HRS</p></div></section>
+<section class="cash" aria-labelledby="cash-h"><div class="wrap"><p class="eyebrow" style="color:#C8312B">Bring cash</p><h2 id="cash-h">Bring cash to be safe.</h2><p>Reviewers say it's cash only. <span class="need">[NEED: confirm payment methods with Lucy's]</span> <span class="need">[NEED: confirm nearest ATM]</span></p>
+<p class="ticker" aria-hidden="true">BURRITOS · TACOS · PUPUSAS · CALDOS · BURGERS · BURRITOS · TACOS · PUPUSAS · CALDOS · BURGERS</p></div></section>
 
 <section class="find" id="find" aria-labelledby="find-h"><div class="wrap find-grid"><div><p class="eyebrow">Find us</p><h2 id="find-h">On Pico, in Pico-Union.</h2>
 <address class="nap"><strong>Lucy's Drive Thru</strong>1568 W Pico Blvd<br>Los Angeles, CA 90015<br><a href="{TEL}">(213) 384-0721</a></address><div class="ctas">{dbtn()}{cbtn()}</div></div>
 <div class="route">{ROUTE}{MAPBOX}</div></div></section>
 
-<section class="final" aria-labelledby="fin-h"><div class="wrap"><h2 id="fin-h">Hungry now? We're up.</h2><p class="sub" style="margin:14px auto 0">Open 24 hours. Cash only.</p><div class="ctas">{dbtn()}{cbtn()}</div></div></section>
+<section class="final" aria-labelledby="fin-h"><div class="wrap"><h2 id="fin-h">Hungry now? We're up.</h2><p class="sub" style="margin:14px auto 0">Open 24 hours. Bring cash to be safe.</p><div class="ctas">{dbtn()}{cbtn()}</div></div></section>
 </main>'''+FOOT
 open("index.html","w").write(home)
 # ---------- MENU
-cats="".join(f'<article class="card"><p class="big" style="font-size:1.6rem">{t}</p><p><span class="need">[NEED: items + prices from Lucy\'s]</span></p></article>' for t in ["Mexican","American"])
-menu=head("Menu | Lucy's Drive Thru, 24 Hours on Pico Blvd","Lucy's Drive Thru serves Mexican and American food 24 hours a day at 1568 W Pico Blvd, Los Angeles. Cash only. Call (213) 384-0721.","/menu/")+nav("menu")+f'''
-<main id="main"><section class="page-hero"><div class="wrap"><p class="eyebrow">The board</p><h1>Mexican and American food. <span style="color:var(--primary)">Any hour.</span></h1>
-<p class="sub" style="max-width:52ch;margin:18px 0 0">The full menu is coming straight from Lucy's. Until then, call and ask what's good tonight.</p>
-<p style="margin-top:16px"><span class="need">[NEED: confirmed menu + prices from owner. Will be labeled "Prices may vary, call to confirm."]</span></p>
-<div class="ctas" style="margin-top:24px">{cbtn("btn-a","Call (213) 384-0721")}{dbtn("btn-g")}</div>
-<p style="margin-top:18px"><strong>Cash only.</strong> Open 24 hours.</p>
-<div class="cats">{cats}</div></div></section></main>'''+FOOT
+MCATS=[("Mexican","r",["Burritos (carne asada and more)","Tacos","Enchilada plates","Combo plates","Nachos"]),("Salvadoran","g",["Pupusas"]),("Seafood &amp; soups","",["Seafood plates","Caldos","Menudo <span class=\"need\">[NEED: confirm days]</span>"]),("American","y",["Burgers","Chili cheese fries","Fish &amp; chips"]),("Breakfast","",["Breakfast burritos","Breakfast plates"]),("Drinks","g",["Horchata","Milkshakes"])]
+shelf2="".join(f'<article class="card mcat {c}"><p class="eyebrow">{i+1:02d}</p><h2 class="big flapc" style="font-size:2rem">{t}</h2><ul class="mlist">'+"".join(f"<li>{x}</li>" for x in items)+'</ul></article>' for i,(t,c,items) in enumerate(MCATS))
+menu=head("Menu | Lucy's Drive Thru, 24 Hours on Pico Blvd","Lucy's Drive Thru menu: burritos, tacos, pupusas, seafood, caldos, menudo, burgers, fish and chips, breakfast. 24 hours at 1568 W Pico Blvd. Call for today's prices.","/menu/")+nav("menu")+f'''
+<main id="main"><section class="page-hero"><div class="wrap"><p class="eyebrow">The board</p><h1>Mexican, American and <span style="color:var(--primary)">Salvadoran.</span> Any hour.</h1>
+<p class="sub" style="max-width:52ch;margin:18px 0 0">Burritos, tacos, pupusas, caldos, burgers and breakfast, around the clock.</p>
+<p class="mnote">Menu may vary. Call for today's prices.</p>
+<div class="ctas" style="margin-top:24px">{cbtn("btn-a","Call for today's prices")}{dbtn("btn-g")}</div>
+<p style="margin-top:18px">Reviewers say it's cash only. Bring cash to be safe.</p></div></section>
+<section class="shelf-sec" style="padding-top:20px" aria-label="Menu categories"><h2 class="shelf-h">Six boards. <span>Swipe through.</span></h2>
+<div class="shelf mshelf" tabindex="0" aria-label="Menu categories, scroll sideways" data-shelf>{shelf2}</div>
+<div class="shelf-ctrl"><button type="button" aria-label="Previous" data-sh="-1">←</button><button type="button" aria-label="Next" data-sh="1">→</button></div>
+<div class="wrap"><p class="mnote" style="margin-top:30px">Menu may vary. Call for today's prices. Items gathered from public listings; <span class="need">[NEED: confirm full menu with Lucy's]</span></p></div></section></main>'''+FOOT
 open("menu/index.html","w").write(menu)
 # ---------- FIND
-find=head("Find Us | Lucy's Drive Thru, 1568 W Pico Blvd, Los Angeles","Directions to Lucy's Drive Thru at 1568 W Pico Blvd, Los Angeles, CA 90015 in Pico-Union. Open 24 hours, cash only. Call (213) 384-0721.","/find-us/")+nav("find")+f'''
+find=head("Find Us | Lucy's Drive Thru, 1568 W Pico Blvd, Los Angeles","Directions to Lucy's Drive Thru at 1568 W Pico Blvd, Los Angeles, CA 90015 in Pico-Union. Drive-thru, dining room and parking per listings. Open 24 hours.","/find-us/")+nav("find")+f'''
 <main id="main"><section class="page-hero"><div class="wrap find-grid"><div><p class="eyebrow">Find us</p><h1>1568 W Pico Blvd.</h1>
 <address class="nap"><strong>Lucy's Drive Thru</strong>1568 W Pico Blvd<br>Los Angeles, CA 90015 (Pico-Union)<br><a href="{TEL}">(213) 384-0721</a></address>
-<p><span class="open"><i></i>Open 24 hours, every day</span> · <strong>Cash only</strong></p>
+<p><span class="open"><i></i>Open 24 hours, every day</span></p><p>Reviewers say it's cash only. Bring cash to be safe.</p><p>Listings mention a dining area and free parking. <span class="need">[NEED: confirm dining room]</span></p>
 <p><span class="need">[NEED: which side is the drive-thru entrance?]</span></p><p><span class="need">[NEED: walk-up window? parking?]</span></p>
 <div class="ctas" style="margin-top:20px">{dbtn()}{cbtn()}</div></div><div class="route">{ROUTE}{MAPBOX}</div></div></section></main>'''+FOOT
 open("find-us/index.html","w").write(find)

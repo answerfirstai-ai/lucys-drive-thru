@@ -50,6 +50,8 @@ mm.add({isDesktop:'(min-width: 810px)',isMobile:'(max-width: 809px)',reduce:'(pr
  // pico line draw + pin drop
  $$('.route').forEach(r=>{g.fromTo($('.pico',r),{strokeDashoffset:400},{strokeDashoffset:0,ease:'none',scrollTrigger:{trigger:r,start:'top 85%',end:'top 35%',scrub:true}});
   g.from($('.pin',r),{y:-60,opacity:0,duration:.9,ease:'bounce.out',scrollTrigger:{trigger:r,start:'top 50%'}})});
+ // menu reveals
+ if($('.mcat')){g.from('.mcat',{y:60,opacity:0,rotateX:-14,transformPerspective:900,duration:.7,stagger:.09,ease:'power3.out',scrollTrigger:{trigger:'.mshelf',start:'top 85%'}});$$('.mcat').forEach(cd=>g.from($$('.mlist li',cd),{x:-16,opacity:0,stagger:.05,duration:.35,delay:.3,scrollTrigger:{trigger:cd,start:'top 85%'}}))}
  // reveals
  $$('.shelf-h,.cash h2,.find h2,.final h2,.page-hero h1').forEach(el=>g.from(el,{y:40,opacity:0,duration:.7,ease:'power3.out',scrollTrigger:{trigger:el,start:'top 88%'}}));
  g.to('.ticker',{xPercent:-30,ease:'none',scrollTrigger:{trigger:'.cash',start:'top bottom',end:'bottom top',scrub:true}});
