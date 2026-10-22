@@ -199,3 +199,4 @@ body{font-size:clamp(18px,1.3vw,20px);line-height:1.45}
 @media(max-width:899px){.fs-g{grid-template-columns:1fr 1fr}}
 @media(min-width:761px){.hero-ph{max-width:675px;max-height:844px;width:100%;justify-self:end}}
 @media(max-width:760px){.hero-txt .kicker,.hero-txt .lede{background:rgba(13,14,16,.82);padding:4px 8px;margin-left:-8px;box-decoration-break:clone;-webkit-box-decoration-break:clone;display:inline;line-height:1.6}.hero-txt .lede{display:block;width:fit-content}}
+@media(max-width:760px){.hero-txt .lede{order:2;margin-top:auto!important;max-width:88%}.hero-txt .ctas{order:3;margin-top:14px!important}}
