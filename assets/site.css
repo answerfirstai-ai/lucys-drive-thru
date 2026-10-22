@@ -80,7 +80,7 @@ section{position:relative}
 .card .big{font:400 2.2rem/1 var(--f-display);color:var(--primary)}
 .card.y{background:var(--primary);color:#141A33}.card.y .big{color:var(--script)}
 .card.g{background:var(--green)}.card.g .big{color:#fff}
-.card.r{background:var(--roof)}.card.r .big{color:#fff}
+.card.r{background:#A8461F}.card.r .big{color:#fff}
 .card p{margin:0}
 .shelf-ctrl{max-width:var(--wrap);margin:0 auto;padding:0 var(--gut);display:flex;gap:10px;justify-content:flex-end}
 .shelf-ctrl button{width:48px;height:48px;border-radius:50%;border:1px solid rgba(255,255,255,.3);background:transparent;color:#fff;font-size:1.3rem;cursor:pointer}
