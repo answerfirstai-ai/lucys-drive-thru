@@ -193,3 +193,4 @@ body{font-size:clamp(18px,1.3vw,20px);line-height:1.45}
 .pd{display:block;position:relative;height:110px}}
 @media(max-width:760px){.hero-txt{padding-bottom:64px!important}}
 @media(max-width:760px){.hero-ph{inset:0 0 110px 0!important}}
+@media(min-width:761px){.credit{bottom:4px}}
