@@ -1,126 +1,92 @@
 import json
-B="/lucys-drive-thru"; SITE="https://answerfirstai-ai.github.io/lucys-drive-thru"
-DIR="https://www.google.com/maps/dir/?api=1&destination=Lucy%27s+Drive+Thru%2C+1568+W+Pico+Blvd%2C+Los+Angeles%2C+CA+90015"
-TEL="tel:+12133840721"
-ICO_P='<svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2a1 1 0 0 1 1-.25 11.4 11.4 0 0 0 3.6.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.57a1 1 0 0 1-.25 1z"/></svg>'
-ICO_D='<svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M21.7 11.3 12.7 2.3a1 1 0 0 0-1.4 0l-9 9a1 1 0 0 0 0 1.4l9 9a1 1 0 0 0 1.4 0l9-9a1 1 0 0 0 0-1.4zM14 14.5V12h-4v3H8v-4a1 1 0 0 1 1-1h5V7.5l3.5 3.5z"/></svg>'
-def dbtn(cls="btn-a",lbl="Get directions"): return f'<a class="btn {cls}" data-dir href="{DIR}" target="_blank" rel="noopener">{ICO_D}<span class="lbl">{lbl}</span></a>'
-def cbtn(cls="btn-g",lbl="Call (213) 384-0721"): return f'<a class="btn {cls}" data-call href="{TEL}">{ICO_P}<span class="lbl">{lbl}</span></a>'
-SIGN='''<svg class="sign" viewBox="0 0 300 470" role="img" aria-labelledby="sgt"><title id="sgt">Illustration: a lit roadside sign reading Lucy's Drive Thru</title>
-<rect class="pole" x="138" y="330" width="24" height="140"/>
-<g class="box" data-box><rect x="50" y="8" width="200" height="56" rx="6" fill="#F2D43A" stroke="#C8312B" stroke-width="3"/><text x="150" y="45" text-anchor="middle" font-family="Bowlby One, Impact, sans-serif" font-size="26" fill="#C8312B">OPEN</text></g>
-<g class="box" data-box><rect x="40" y="76" width="220" height="104" rx="8" fill="#fff" stroke="#1F7A3A" stroke-width="4"/><text x="150" y="138" text-anchor="middle" font-family="Yellowtail, cursive" font-size="62" fill="#C8312B">Lucy's</text><text x="150" y="168" text-anchor="middle" font-family="Barlow Condensed, Arial Narrow, sans-serif" font-weight="700" font-size="24" letter-spacing="4" fill="#1F7A3A">DRIVE THRU</text></g>
-<g class="box" data-box><rect x="10" y="192" width="280" height="138" rx="8" fill="#F2D43A" stroke="#C8312B" stroke-width="4"/><text text-anchor="middle" font-family="Bowlby One, Impact, sans-serif" fill="#C8312B"><tspan x="150" y="250" font-size="30">TACOS</tspan><tspan x="150" y="284" font-size="26">BURRITOS</tspan><tspan x="150" y="318" font-size="30">PUPUSAS</tspan></text></g>
-</svg>'''
-SCHEMA={"@context":"https://schema.org","@type":"Restaurant","@id":SITE+"/#restaurant","name":"Lucy's Drive Thru","url":SITE+"/","telephone":"+1-213-384-0721",
+B="/lucys-drive-thru/"; U="https://answerfirstai-ai.github.io/lucys-drive-thru/"
+TEL="tel:+12133840721"; DIR="https://www.google.com/maps/dir/?api=1&destination=Lucy%27s+Drive+Thru%2C+1568+W+Pico+Blvd%2C+Los+Angeles%2C+CA+90015"
+GMAP="https://www.google.com/maps/place/?q=place_id:ChIJN43S4pXHwoAR_sz0JYM8-tQ"; YELP="https://www.yelp.com/biz/lucys-drive-thru-los-angeles"; EATER="https://la.eater.com/venue/31256/lucy-s-drive-thru"
+TITLE="Lucy's Drive Thru | 24-Hour Tacos & Burritos on Pico Blvd, Los Angeles"
+DESC="Open 24 hours, 7 days at 1568 W Pico Blvd. Burritos, tacos, pupusas, menudo, burgers and breakfast any hour. Call (213) 384-0721."
+schema={"@context":"https://schema.org","@type":"Restaurant","@id":U+"#restaurant","name":"Lucy's Drive Thru","url":U,"telephone":"+1-213-384-0721",
 "address":{"@type":"PostalAddress","streetAddress":"1568 W Pico Blvd","addressLocality":"Los Angeles","addressRegion":"CA","postalCode":"90015","addressCountry":"US"},
-"geo":{"@type":"GeoCoordinates","latitude":34.0443442,"longitude":-118.2768267},
-"hasMap":"https://www.google.com/maps/place/?q=place_id:ChIJN43S4pXHwoAR_sz0JYM8-tQ",
+"geo":{"@type":"GeoCoordinates","latitude":34.0443442,"longitude":-118.2768267},"hasMap":GMAP,
 "openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],"opens":"00:00","closes":"23:59"}],
-"servesCuisine":["Mexican","American","Salvadoran"],"hasMenu":SITE+"/menu/","priceRange":"$","areaServed":"Pico-Union, Los Angeles","image":SITE+"/assets/og.png",
-"sameAs":["https://la.eater.com/venue/31256/lucy-s-drive-thru","https://www.yelp.com/biz/lucys-drive-thru-los-angeles"]}
-def head(title,desc,path,extra=""):
-    return f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>{title}</title><meta name="description" content="{desc}"><link rel="canonical" href="{SITE}{path}">
-<meta name="theme-color" content="#141A33"><meta name="color-scheme" content="dark">
-<meta property="og:type" content="restaurant"><meta property="og:site_name" content="Lucy's Drive Thru"><meta property="og:title" content="{title}"><meta property="og:description" content="{desc}"><meta property="og:url" content="{SITE}{path}"><meta property="og:image" content="{SITE}/assets/og.png"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:locale" content="en_US">
-<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{title}"><meta name="twitter:description" content="{desc}"><meta name="twitter:image" content="{SITE}/assets/og.png">
-<link rel="icon" href="{B}/favicon.svg" type="image/svg+xml"><link rel="icon" href="{B}/favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="{B}/assets/apple-touch-icon.png"><link rel="manifest" href="{B}/site.webmanifest">
-<link rel="preload" href="{B}/assets/fonts/BowlbyOne-400.woff2" as="font" type="font/woff2" crossorigin><link rel="preload" href="{B}/assets/fonts/Barlow-400.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="{B}/assets/site.css">
-<script>if(!matchMedia('(prefers-reduced-motion: reduce)').matches)document.documentElement.classList.add('js-motion')</script>
-<script type="application/ld+json">{json.dumps(SCHEMA)}</script>{extra}</head><body>
-<a class="skip" href="#main">Skip to content</a>'''
-def nav(cur):
-    a=lambda h,t,k,c="":f'<a class="l{c}" href="{B}{h}"{" aria-current=\"page\"" if cur==k else ""}>{t}</a>'
-    return f'<nav class="nav" aria-label="Main"><a class="logo" href="{B}/" aria-label="Lucy\'s Drive Thru home">Lucy\'s</a>{a("/menu/","Menu","menu")}{a("/#hours","Hours","x"," hide-s")}{a("/#find","Find us","find"," hide-s")}<button class="mt" type="button" data-motion aria-pressed="false" title="Turn animations off">Motion: on</button>{dbtn("btn-a","Directions")}</nav>'
-FOOT=f'''<footer><div class="wrap f-grid">
-<div><p class="logo" style="display:inline-block">Lucy's</p><p>Drive-thru and dining room on Pico.<br>Mexican, American and Salvadoran food.</p></div>
-<div><p><strong>Lucy's Drive Thru</strong><br>1568 W Pico Blvd<br>Los Angeles, CA 90015 (Pico-Union)</p><p><a href="{TEL}">(213) 384-0721</a></p></div>
-<div><p><span class="open"><i></i>Open 24 hours, every day</span></p><p><span class="need">[NEED: confirm holiday hours]</span></p><p>Reviewers say it's cash only. Bring cash to be safe.</p></div>
-<div><p>Also listed on <a href="https://la.eater.com/venue/31256/lucy-s-drive-thru" rel="noopener" target="_blank">Eater LA</a>.</p><p><a href="{B}/menu/">Menu</a> · <a href="{B}/find-us/">Find us</a></p><p style="opacity:.6;font-size:.85rem">Sign artwork is an illustration.</p></div>
-</div></footer>
-<div class="mbar" role="group" aria-label="Quick actions">{dbtn("btn-a","Directions")}{cbtn("btn-g","Call")}</div>
-<script src="{B}/assets/js/gsap.min.js" defer></script><script src="{B}/assets/js/ScrollTrigger.min.js" defer></script><script src="{B}/assets/js/app.js" defer></script></body></html>'''
-ROUTE='''<svg viewBox="0 0 400 220" role="img" aria-label="Simplified line drawing of W Pico Blvd with a pin at 1568 W Pico Blvd"><rect width="400" height="220" rx="12" fill="#141A33"/>
-<path d="M0 150 H400" stroke="#2f3866" stroke-width="22"/><path class="pico" d="M0 150 H400" stroke="#FFB238" stroke-width="4" stroke-dasharray="400" stroke-dashoffset="0" fill="none"/>
-<text x="16" y="186" fill="#F4F4EE" font-family="Barlow Condensed, sans-serif" font-weight="700" font-size="16" letter-spacing="3">W PICO BLVD</text>
-<g class="pin"><path d="M268 140c-14-18-22-30-22-42a22 22 0 0 1 44 0c0 12-8 24-22 42z" fill="#C8312B"/><circle cx="268" cy="98" r="8" fill="#fff"/></g>
-<text x="300" y="104" fill="#fff" font-family="Barlow, sans-serif" font-weight="600" font-size="15">1568</text></svg>'''
-MAPBOX=f'<div class="mapbox" data-map><button class="btn btn-g" type="button" data-loadmap>Show the map</button></div>'
-# ---------- HOME
-def pic(name,alt,big,sizes,cls="",lazy=True,small=None):
-    sm=small or (640 if name.startswith('food') else 800)
-    bw=1024 if name.startswith('food') else 1280
-    ld='loading="lazy" decoding="async"' if lazy else 'fetchpriority="high" decoding="async"'
-    w,h=(1024,768) if name.startswith('food') else (1280,720)
-    return (f'<picture class="{cls}"><source type="image/avif" srcset="{B}/assets/img/{name}-{sm}.avif {sm}w, {B}/assets/img/{name}-{big}.avif {bw}w" sizes="{sizes}">'
-            f'<source type="image/webp" srcset="{B}/assets/img/{name}-{sm}.webp {sm}w, {B}/assets/img/{name}-{big}.webp {bw}w" sizes="{sizes}">'
-            f'<img src="{B}/assets/img/{name}-{sm}.webp" alt="{alt}" width="{w}" height="{h}" {ld}></picture>')
-ILL='<span class="ill">Illustrative</span>'
-FOOD=[("food-burrito","Burritos","Carne asada and more, plus tacos, enchilada and combo plates, nachos.","Illustrative photo of a burrito (not Lucy's food)"),
-("food-pupusas","Pupusas","Salvadoran pupusas, right next to the burritos.","Illustrative photo of pupusas (not Lucy's food)"),
-("food-caldo","Caldos","Seafood plates, caldos and menudo.","Illustrative photo of a seafood soup (not Lucy's food)"),
-("food-burger","Burgers","Chili cheese fries, fish &amp; chips.","Illustrative photo of a burger and chili cheese fries (not Lucy's food)")]
-fshelf="".join(f'<article class="fcard"><div class="fimg">{pic(n,a,1024,"(max-width:809px) 80vw, 340px")}{ILL}</div><div class="fbody"><h3>{t}</h3><p>{d}</p></div></article>' for n,t,d,a in FOOD)
-fshelf+='<article class="fcard ftext"><div class="fbody"><h3>Breakfast</h3><p>Breakfast burritos and plates. Horchata and milkshakes to drink.</p><p class="mnote">Menu may vary. Call for today\'s prices.</p><a class="btn btn-a" href="'+B+'/menu/">Full menu</a></div></article>'
-home=head("Lucy's Drive Thru | Open 24 Hours on Pico Blvd, Los Angeles","Mexican, American and Salvadoran food at 1568 W Pico Blvd in Pico-Union: drive-thru, open 24 hours. Burritos, tacos, pupusas, burgers. Call (213) 384-0721 or get directions.","/",f'<link rel="preload" as="image" type="image/avif" imagesrcset="{B}/assets/img/hero-night-800.avif 800w, {B}/assets/img/hero-night-1600.avif 1280w" imagesizes="100vw" fetchpriority="high">')+nav("home")+f'''
-<main id="main">
-<section class="hero" aria-labelledby="h1"><div class="hero-media" aria-hidden="false">{pic("hero-night","Illustrative night photo of a generic roadside diner with an OPEN neon sign on wet asphalt (not Lucy's)",1600,"100vw","hero-pic",False)}{ILL}</div>
-<div class="sweep" aria-hidden="true"></div><div class="hero-shade" aria-hidden="true"></div>
-<div class="wrap hero-copy">
-<p class="open"><i></i>Open now · 24 hours</p>
-<h1 id="h1"><span class="s">Lucy's.</span>Burritos, pupusas and burgers on <span class="y">Pico.</span> Open 24 hours.</h1>
-<p class="sub">Mexican, American and Salvadoran food. Drive through or come inside.</p>
-<div class="ctas">{dbtn()}{cbtn()}</div></div>
-<a class="scroll-cue" href="#pull">Scroll</a></section>
-
-<section class="pull" id="pull" aria-labelledby="pull-h"><div class="asphalt" aria-hidden="true"></div><div class="beam" aria-hidden="true"></div>
-<div class="wrap pull-grid"><div><p class="eyebrow">Pull in</p><h2 id="pull-h">Headlights on. Come hungry.</h2><p class="sub" style="max-width:38ch;margin:18px 0 24px">Lucy's has a drive-thru on W Pico Blvd, and listings mention a dining room and free parking too. <span class="need">[NEED: confirm dining room + drive-thru hours]</span></p>{dbtn()}</div>
-<div class="board"><div class="board-in" data-board><div class="board-head"><span>THE BOARD</span><span>ANY HOUR</span></div>
-<ul class="rows"><li><span>Burritos &amp; tacos</span><span>✓</span></li><li><span>Pupusas</span><span>✓</span></li><li><span>Seafood, caldos, menudo</span><span>✓</span></li><li><span>Burgers &amp; fish and chips</span><span>✓</span></li><li><span>Breakfast</span><span>✓</span></li><li class="note"><span>Menu may vary. Call for today's prices.</span></li></ul><p style="margin:14px 0 0"><a class="btn btn-g" href="{B}/menu/">See the full menu</a></p></div></div></div></section>
-
-<section class="shelf-sec" id="food" aria-labelledby="shelf-h"><h2 class="shelf-h" id="shelf-h">What's cooking. <span>Swipe or scroll sideways at your own pace.</span></h2>
-<div class="shelf" tabindex="0" aria-label="Food, scroll sideways" data-shelf>{fshelf}</div>
-<div class="shelf-ctrl"><button type="button" aria-label="Previous" data-sh="-1">←</button><button type="button" aria-label="Next" data-sh="1">→</button></div></section>
-
-<section class="sky" id="hours" aria-labelledby="sky-h"><div class="sky-media">{pic("street-sunrise","Illustrative photo of a generic Los Angeles boulevard at sunrise (not Pico Blvd)",1600,"100vw","sky-pic")}{ILL}</div><div class="night" aria-hidden="true"></div><div class="stars" aria-hidden="true"></div>
-<div class="sky-ui"><div><p class="eyebrow" style="color:#fff">Any hour</p><h2 id="sky-h" class="clock" data-clock>3 AM</h2><p class="stamp">Open.</p><p class="cap">6 PM, 3 AM, 6 AM: open 24 hours, every day.</p></div></div></section>
-
-<section class="cash" aria-labelledby="cash-h"><div class="wrap"><p class="eyebrow" style="color:#8f1f1a">Bring cash</p><h2 id="cash-h">Bring cash to be safe.</h2><p>Reviewers say it's cash only. <span class="need">[NEED: confirm payment methods with Lucy's]</span> <span class="need">[NEED: confirm nearest ATM]</span></p></div></section>
-
-<section class="find" id="find" aria-labelledby="find-h"><div class="wrap find-grid"><div><p class="eyebrow">Find us</p><h2 id="find-h">On Pico, in Pico-Union.</h2>
-<address class="nap"><strong>Lucy's Drive Thru</strong>1568 W Pico Blvd<br>Los Angeles, CA 90015<br><a href="{TEL}">(213) 384-0721</a></address><p>Listings mention a dining area and free parking. <span class="need">[NEED: confirm dining room]</span></p><div class="ctas">{dbtn()}{cbtn()}</div></div>
-<div class="route">{ROUTE}{MAPBOX}</div></div></section>
-
-<section class="final" aria-labelledby="fin-h"><canvas class="gl" aria-hidden="true"></canvas><div class="wrap"><h2 id="fin-h">Hungry now? We're up.</h2><p class="sub" style="margin:14px auto 0">Open 24 hours. Bring cash to be safe.</p><div class="ctas">{dbtn()}{cbtn()}</div></div></section>
-</main>'''+FOOT
-open("index.html","w").write(home)
-# ---------- MENU
-MIMG={"Mexican":"food-burrito","Salvadoran":"food-pupusas","Seafood &amp; soups":"food-caldo","American":"food-burger"}
-MCATS=[("Mexican","r",["Burritos (carne asada and more)","Tacos","Enchilada plates","Combo plates","Nachos"]),("Salvadoran","g",["Pupusas"]),("Seafood &amp; soups","",["Seafood plates","Caldos","Menudo <span class=\"need\">[NEED: confirm days]</span>"]),("American","y",["Burgers","Chili cheese fries","Fish &amp; chips"]),("Breakfast","",["Breakfast burritos","Breakfast plates"]),("Drinks","g",["Horchata","Milkshakes"])]
-shelf2="".join(f'<article class="card mcat {c}">'+(f'<div class="fimg">{pic(MIMG[t],"Illustrative photo (not Lucy\'s food)",1024,"(max-width:809px) 80vw, 340px")}{ILL}</div>' if t in MIMG else '')+f'<p class="eyebrow">{i+1:02d}</p><h2 class="big flapc" style="font-size:2rem">{t}</h2><ul class="mlist">'+"".join(f"<li>{x}</li>" for x in items)+'</ul></article>' for i,(t,c,items) in enumerate(MCATS))
-menu=head("Menu | Lucy's Drive Thru, 24 Hours on Pico Blvd","Lucy's Drive Thru menu: burritos, tacos, pupusas, seafood, caldos, menudo, burgers, fish and chips, breakfast. 24 hours at 1568 W Pico Blvd. Call for today's prices.","/menu/")+nav("menu")+f'''
-<main id="main"><section class="page-hero"><div class="wrap"><p class="eyebrow">The board</p><h1>Mexican, American and <span style="color:var(--primary)">Salvadoran.</span> Any hour.</h1>
-<p class="sub" style="max-width:52ch;margin:18px 0 0">Burritos, tacos, pupusas, caldos, burgers and breakfast, around the clock.</p>
-<p class="mnote">Menu may vary. Call for today's prices.</p>
-<div class="ctas" style="margin-top:24px">{cbtn("btn-a","Call for today's prices")}{dbtn("btn-g")}</div>
-<p style="margin-top:18px">Reviewers say it's cash only. Bring cash to be safe.</p></div></section>
-<section class="shelf-sec" style="padding-top:20px" aria-label="Menu categories"><h2 class="shelf-h">Six boards. <span>Scroll sideways at your own pace.</span></h2>
-<div class="shelf mshelf" tabindex="0" aria-label="Menu categories, scroll sideways" data-shelf>{shelf2}</div>
-<div class="shelf-ctrl"><button type="button" aria-label="Previous" data-sh="-1">←</button><button type="button" aria-label="Next" data-sh="1">→</button></div>
-<div class="wrap"><p class="mnote" style="margin-top:30px">Menu may vary. Call for today's prices. Items gathered from public listings; <span class="need">[NEED: confirm full menu with Lucy's]</span></p></div></section></main>'''+FOOT
-open("menu/index.html","w").write(menu)
-# ---------- FIND
-find=head("Find Us | Lucy's Drive Thru, 1568 W Pico Blvd, Los Angeles","Directions to Lucy's Drive Thru at 1568 W Pico Blvd, Los Angeles, CA 90015 in Pico-Union. Drive-thru, dining room and parking per listings. Open 24 hours.","/find-us/")+nav("find")+f'''
-<main id="main"><section class="page-hero"><div class="wrap find-grid"><div><p class="eyebrow">Find us</p><h1>1568 W Pico Blvd.</h1>
-<address class="nap"><strong>Lucy's Drive Thru</strong>1568 W Pico Blvd<br>Los Angeles, CA 90015 (Pico-Union)<br><a href="{TEL}">(213) 384-0721</a></address>
-<p><span class="open"><i></i>Open 24 hours, every day</span></p><p>Reviewers say it's cash only. Bring cash to be safe.</p><p>Listings mention a dining area and free parking. <span class="need">[NEED: confirm dining room]</span></p>
-<p><span class="need">[NEED: which side is the drive-thru entrance?]</span></p><p><span class="need">[NEED: walk-up window? parking?]</span></p>
-<div class="ctas" style="margin-top:20px">{dbtn()}{cbtn()}</div></div><div class="route">{ROUTE}{MAPBOX}</div></div></section></main>'''+FOOT
-open("find-us/index.html","w").write(find)
-nf=head("Page not found | Lucy's Drive Thru","This page isn't on the board. Lucy's Drive Thru, 1568 W Pico Blvd, open 24 hours.","/404.html",'<meta name="robots" content="noindex">')+nav("")+f'''<main id="main"><section class="page-hero" style="min-height:70vh"><div class="wrap"><p class="eyebrow">404</p><h1>Wrong turn on Pico.</h1><p class="sub" style="margin:18px 0 24px">That page isn't here. Lucy's still is, 24 hours.</p><div class="ctas"><a class="btn btn-a" href="{B}/">Back to Lucy's</a>{dbtn("btn-g")}</div></div></section></main>'''+FOOT
-open("404.html","w").write(nf)
-open("robots.txt","w").write(f"User-agent: *\nAllow: /\n\nSitemap: {SITE}/sitemap.xml\n")
-open("sitemap.xml","w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+"".join(f"  <url><loc>{SITE}{p}</loc><lastmod>2026-10-22</lastmod></url>\n" for p in ["/","/menu/","/find-us/"])+"</urlset>\n")
-open("site.webmanifest","w").write(json.dumps({"name":"Lucy's Drive Thru","short_name":"Lucy's","start_url":B+"/","display":"browser","background_color":"#141A33","theme_color":"#141A33","icons":[{"src":B+"/assets/apple-touch-icon.png","sizes":"180x180","type":"image/png"},{"src":B+"/assets/icon-512.png","sizes":"512x512","type":"image/png"}]}))
+"servesCuisine":["Mexican","Salvadoran","American"],"hasMenu":U+"menu/","areaServed":"Pico-Union, Los Angeles","image":U+"assets/og.jpg","sameAs":[EATER,YELP]}
+def pic(n,ws,sizes,alt,w,h,lazy=True,cls=""):
+  a=", ".join(f"{B}assets/img/{n}-{x}.avif {x}w" for x in ws); v=", ".join(f"{B}assets/img/{n}-{x}.webp {x}w" for x in ws)
+  l='loading="lazy"' if lazy else 'fetchpriority="high"'
+  return f'<picture class="{cls}"><source type="image/avif" srcset="{a}" sizes="{sizes}"><source type="image/webp" srcset="{v}" sizes="{sizes}"><img src="{B}assets/img/{n}-{ws[0]}.webp" alt="{alt}" width="{w}" height="{h}" {l} decoding="async"></picture>'
+CALL=f'<a class="btn b1" data-call href="{TEL}">Call</a>'
+DIRB=f'<a class="btn b2" data-dir href="{DIR}" target="_blank" rel="noopener">Directions</a>'
+def head(title,desc,path,preload=""):
+  return f'''<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>{title}</title><meta name="description" content="{desc}"><link rel="canonical" href="{U}{path}">
+<meta name="theme-color" content="#0D0E10"><meta name="color-scheme" content="dark">
+<meta property="og:type" content="website"><meta property="og:site_name" content="Lucy's Drive Thru"><meta property="og:title" content="{title}"><meta property="og:description" content="{desc}"><meta property="og:url" content="{U}{path}"><meta property="og:image" content="{U}assets/og.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:locale" content="en_US">
+<meta name="twitter:card" content="summary_large_image"><meta name="twitter:title" content="{title}"><meta name="twitter:description" content="{desc}"><meta name="twitter:image" content="{U}assets/og.jpg">
+<link rel="icon" href="{B}favicon.svg" type="image/svg+xml"><link rel="icon" href="{B}favicon.ico" sizes="32x32"><link rel="apple-touch-icon" href="{B}assets/apple-touch-icon.png"><link rel="manifest" href="{B}site.webmanifest">
+<link rel="preload" href="{B}assets/fonts/big-shoulders-display-latin-900-normal.woff2" as="font" type="font/woff2" crossorigin>{preload}
+<link rel="stylesheet" href="{B}assets/site.css">
+<script type="application/ld+json">{json.dumps(schema)}</script></head><body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav" id="top"><a class="mark" href="{B}" aria-label="Lucy's Drive Thru, home">LUCY'S<span>·</span>PICO</a>
+<nav class="links" id="navlinks" aria-label="Main"><a href="{B}menu/">Menu</a><a href="{B}find-us/">Find us</a><a class="tel" data-call href="{TEL}">(213) 384-0721</a><span class="hrs">Open 24 hrs</span></nav>
+<button class="burger" type="button" aria-expanded="false" aria-controls="navlinks"><span class="bl"></span><span class="sr">Menu</span>MENU</button></header>
+<main id="main">'''
+def foot():
+  return f'''</main>
+<footer class="foot"><div class="f1"><p class="tc"><span class="rec" aria-hidden="true">REC</span> 06:00 AM · END OF TAPE</p><p class="fbig">LUCY'S<br>DRIVE THRU</p></div>
+<div class="f2"><p class="stamp">NAP</p><address>1568 W Pico Blvd<br>Los Angeles, CA 90015<br><a data-call href="{TEL}">(213) 384-0721</a></address><p>Open 24 hours, 7 days.</p></div>
+<div class="f3"><p class="stamp">Pages</p><ul><li><a href="{B}">Home</a></li><li><a href="{B}menu/">Menu</a></li><li><a href="{B}find-us/">Find us</a></li></ul></div>
+<div class="f4"><p class="stamp">Elsewhere</p><ul><li><a href="{GMAP}" rel="noopener" target="_blank">Google Maps</a></li><li><a href="{YELP}" rel="noopener" target="_blank">Yelp</a></li><li><a href="{EATER}" rel="noopener" target="_blank">Eater LA</a></li></ul></div>
+<p class="fine">Photos marked “Illustrative scene” are AI-generated stand-ins for the street, not Lucy's itself, until we shoot the real thing. No dishes or storefront shown are Lucy's.</p></footer>
+<div class="mbar">{CALL}{DIRB}</div>
+<script src="{B}assets/js/app.js" defer></script></body></html>'''
+BOARD=[("Burritos","Carne asada, breakfast burritos"),("Tacos","Street tacos"),("Pupusas","Salvadoran, off the comal"),("Enchilada plates","Combo plates, nachos, tortas, sopes"),("Mariscos","Shrimp plates, cocteles, tostadas, ceviche"),("Caldos","Camarón, res, pollo, albóndigas"),("Menudo","Ask what days"),("Burgers","Chili cheese fries, fish &amp; chips"),("Desayuno","Breakfast, any hour"),("Para tomar","Horchata, jugos naturales, malts &amp; shakes")]
+def board(rows,h="h-board"):
+  r="".join(f'<li><span class="it">{a}</span><span class="dots" aria-hidden="true"></span><span class="nt">{b}</span></li>' for a,b in rows)
+  return f'''<div class="board" role="group" aria-labelledby="{h}"><div class="board-in"><p class="board-top" aria-hidden="true"><span>LUCY'S</span><span>24 HRS</span></p><h2 class="board-h" id="{h}">El menú</h2><ul class="rows">{r}</ul><p class="board-note">Menu may vary. Call for today's prices.</p></div></div>'''
+tc=lambda t:f'<p class="tc"><span class="rec" aria-hidden="true">REC</span> {t}</p>'
+ILL='<span class="ill">Illustrative scene</span>'
+home=head(TITLE,DESC,"",f'<link rel="preload" as="image" type="image/avif" imagesrcset="{B}assets/img/sodium_sky-480.avif 480w, {B}assets/img/sodium_sky-768.avif 768w" imagesizes="(min-width:900px) 38vw, 100vw" fetchpriority="high">')+f'''
+<section class="hero" aria-labelledby="h1">
+<div class="hero-txt"><p class="tc live"><span class="rec" aria-hidden="true">REC</span> <span data-clock aria-hidden="true">03:07:12 AM</span> · 1568 W PICO BLVD · PICO-UNION</p>
+<h2 class="kicker">24-hour tacos and burritos on Pico Blvd</h2>
+<h1 id="h1" class="mega"><span class="ln">Still</span><span class="ln">on.</span></h1>
+<p class="lede">Burritos, pupusas, menudo. Every hour, every night.</p>
+<div class="ctas">{CALL}{DIRB}</div></div>
+<figure class="hero-ph">{pic("sodium_sky",[480,768],"(min-width:900px) 38vw, 100vw","Illustrative scene: a sodium streetlight in drizzle against the night sky",768,1024,False)}{ILL}<figcaption class="tc sm">CAM 01 · LOOKING UP</figcaption></figure>
+</section>
+<section class="puddle" aria-label="Reflection of the words Still on in a wet street">
+<div class="pd" data-puddle>{pic("puddle",[640,1024],"100vw","",1024,576,True,"pd-img")}<div class="pd-txt" aria-hidden="true">STILL ON.</div><canvas class="pd-gl" aria-hidden="true"></canvas>{ILL}</div>
+<svg width="0" height="0" aria-hidden="true" style="position:absolute"><filter id="rip"><feTurbulence type="fractalNoise" baseFrequency="0.008 0.06" numOctaves="2" seed="3" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="18" xChannelSelector="R" yChannelSelector="G"/></filter></svg>
+</section>
+<section class="shift" aria-labelledby="h-shift"><div class="s-l">{tc("11:48 PM")}</div>
+<div class="s-r"><h2 id="h-shift" class="xl">After the shift.</h2><p class="body">Nurses off the late shift. Cooks from other kitchens. Somebody's cousin who just landed at LAX. The window on Pico is lit, and the line moves. <span lang="es">Buenas noches.</span></p></div></section>
+<section class="menu-sec" id="menu" aria-labelledby="h-board">
+<div class="m-l">{tc("01:30 AM")}<p class="xl2">The menu, roughly.</p><p class="body">Mexican, Salvadoran, American. Desayuno at any hour, because hours don't really apply here.</p><p><a class="txtlink" href="{B}menu/">Full menu →</a></p></div>
+<div class="m-r">{board(BOARD[:8])}<div class="ctas">{CALL}</div></div></section>
+<section class="dawn" id="find" aria-labelledby="h-dawn">
+<figure class="dawn-ph">{pic("dawn_pico",[640,1024],"100vw","Illustrative scene: an empty Los Angeles boulevard at blue hour with palms and wet asphalt",1024,576)}{ILL}</figure>
+<div class="dawn-txt">{tc("05:52 AM")}<h2 id="h-dawn" class="xl">Come as you are.</h2>
+<p class="body">Drive through, or park and sit down. Listings mention a dining area, patio and free lot. <span class="need">[NEED: confirm dining room + patio]</span></p>
+<p class="body cash">Reviewers say it's cash only. Bring cash to be safe.</p>
+<address class="nap">1568 W Pico Blvd, Los Angeles, CA 90015<br>Pico-Union, near Downtown LA · Open 24 hours, 7 days<br><a data-call href="{TEL}">(213) 384-0721</a></address>
+<div class="ctas">{DIRB}{CALL}</div></div></section>
+'''+foot()
+menu=head("Menu | Lucy's Drive Thru, 24 Hours on Pico Blvd","Burritos, tacos, pupusas, caldos, menudo, mariscos, burgers and breakfast at Lucy's Drive Thru, 1568 W Pico Blvd. Open 24 hours. Call (213) 384-0721 for today's prices.","menu/")+f'''
+<section class="page-h"><div>{tc("01:30 AM · THE BOARD")}<h1 class="mega2">El menú.</h1><p class="lede">Mexican, Salvadoran, American. No prices here. They change, so ask at the window or call.</p><div class="ctas">{CALL}{DIRB}</div></div></section>
+<section class="menu-full" aria-label="Menu board">{board(BOARD,"h-board")}
+<div class="m-aside"><p class="body">Item names come from public listings, grouped by what's on the board. <span class="need">[NEED: confirm full menu + menudo days with Lucy's]</span></p><p class="body cash">Reviewers say it's cash only. Bring cash to be safe.</p></div></section>
+'''+foot()
+find=head("Find Us | Lucy's Drive Thru, 1568 W Pico Blvd, Los Angeles","Lucy's Drive Thru is at 1568 W Pico Blvd, Los Angeles, CA 90015 in Pico-Union. Open 24 hours, 7 days. Drive-thru and dining area. Call (213) 384-0721.","find-us/")+f'''
+<section class="page-h"><div>{tc("05:52 AM · PICO-UNION")}<h1 class="mega2">Find us.</h1><p class="lede">1568 W Pico Blvd. Open 24 hours, 7 days.</p><div class="ctas">{DIRB}{CALL}</div></div></section>
+<section class="find-grid"><div class="fg-l">
+<dl class="facts"><dt>Address</dt><dd>1568 W Pico Blvd<br>Los Angeles, CA 90015</dd><dt>Phone</dt><dd><a data-call href="{TEL}">(213) 384-0721</a></dd><dt>Hours</dt><dd>Open 24 hours, 7 days</dd><dt>How</dt><dd>Drive-thru, takeout. Listings mention a dining area, patio and free parking lot. <span class="need">[NEED: confirm dining room + patio]</span></dd><dt>Pay</dt><dd>Reviewers say it's cash only. Bring cash to be safe. <span class="need">[NEED: confirm payment]</span></dd></dl>
+<p><a class="txtlink" href="{GMAP}" target="_blank" rel="noopener">Open in Google Maps →</a></p></div>
+<figure class="fg-r">{pic("dawn_pico",[640,1024],"(min-width:900px) 55vw, 100vw","Illustrative scene: a Los Angeles boulevard before sunrise",1024,576)}{ILL}</figure></section>
+'''+foot()
+nf=head("Not found | Lucy's Drive Thru","This page doesn't exist. Lucy's Drive Thru, 1568 W Pico Blvd, open 24 hours.","404.html").replace('<link rel="canonical"','<meta name="robots" content="noindex"><link rel="x-canonical"')+f'''
+<section class="nf">{tc("04:04 AM")}<h1 class="mega2">Wrong turn.</h1><p class="lede">Still open, though.</p><div class="ctas" style="justify-content:center"><a class="btn b1" href="{B}">Home</a><a class="btn b2" href="{B}menu/">Menu</a></div></section>
+'''+foot()
+for p,h in [("index.html",home),("menu/index.html",menu),("find-us/index.html",find),("404.html",nf)]: open(p,"w").write(h)
+open("robots.txt","w").write(f"User-agent: *\nAllow: /\n\nSitemap: {U}sitemap.xml\n")
+open("sitemap.xml","w").write('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+"".join(f"  <url><loc>{U}{p}</loc><lastmod>2026-10-22</lastmod></url>\n" for p in ["","menu/","find-us/"])+"</urlset>\n")
+open("site.webmanifest","w").write(json.dumps({"name":"Lucy's Drive Thru","short_name":"Lucy's","start_url":B,"display":"browser","background_color":"#0D0E10","theme_color":"#0D0E10","icons":[{"src":B+"assets/icon-512.png","sizes":"512x512","type":"image/png"}]}))
