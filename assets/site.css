@@ -194,6 +194,6 @@ body{font-size:clamp(18px,1.3vw,20px);line-height:1.45}
 @media(max-width:760px){.hero-txt{padding-bottom:64px!important}}
 @media(max-width:760px){.hero-ph{inset:0 0 110px 0!important}}
 @media(min-width:761px){.credit{bottom:4px}}
-.hero-bg img.sign-ig{object-position:22% 20%!important}
+.hero-bg img.sign-ig{object-position:100% 0!important}
 .foodstrip{padding:0 var(--pad) 48px}.fs-g{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.fs-c{display:block;line-height:0}.fs-c img{width:100%;height:auto;display:block}.credit.fs-cr{position:static;background:none;padding:10px 0 0}.credit a{color:inherit}
 @media(max-width:899px){.fs-g{grid-template-columns:1fr 1fr}}
