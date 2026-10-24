@@ -65,7 +65,7 @@ home=head(TITLE,DESC,"",f'<link rel="preload" as="image" type="image/avif" image
 <section class="frame f-find" id="find" aria-labelledby="h-find">
 <figure class="map">{pic("map",[640,1200],"(min-width:900px) 58vw, 100vw","Map of W Pico Blvd in Pico-Union with a marker at 1568 W Pico Blvd",1200,640)}<figcaption class="mapc">Map data &copy; <a href="https://www.openstreetmap.org/copyright" rel="noopener" target="_blank">OpenStreetMap</a> contributors</figcaption></figure>
 <div class="find-t"><h2 id="h-find" class="xl">Find Lucy's</h2>
-<p class="body">Drive through, or park and eat. Listings mention a patio, a dining area and a free lot. <span class="need">[NEED: confirm patio, dining room + lot]</span></p>
+<p class="body">Drive through, or park and eat. Listings mention a patio, a dining area and a free lot. <a href="{TEL}">Call to confirm.</a></p>
 <p class="body cash">Reviewers say it's cash only. Bring cash to be safe.</p>
 <address class="nap">1568 W Pico Blvd, Los Angeles, CA 90015<br>Open 24 hours, 7 days · <a data-call href="{TEL}">(213) 384-0721</a></address>
 <div class="ctas">{DIRB}{CALL}</div></div></section>
@@ -73,12 +73,12 @@ home=head(TITLE,DESC,"",f'<link rel="preload" as="image" type="image/avif" image
 menu=head("Menu | Lucy's Drive Thru, 24 Hours on Pico Blvd","Burritos, tacos, pupusas, caldos, menudo, mariscos, burgers and breakfast at Lucy's Drive Thru, 1568 W Pico Blvd. Open 24 hours. Call (213) 384-0721 for today's prices.","menu/")+f'''
 <section class="page-h"><div>{tc("Menu")}<h1 class="mega2">On the board</h1><p class="lede">Mexican, American and Salvadoran. Prices change, so ask at the window or call.</p><div class="ctas">{CALL}{DIRB}</div></div></section>
 <section class="menu-full" aria-label="Menu board">{board(BOARD,"h-board")}
-<div class="m-aside"><p class="body">Item names come from public listings, grouped by what's on the board. <span class="need">[NEED: confirm full menu + menudo days with Lucy's]</span></p><p class="body cash">Reviewers say it's cash only. Bring cash to be safe.</p></div></section>
+<div class="m-aside"><p class="body">Item names come from public listings, grouped by what's on the board. <a href="{TEL}">Call to confirm the full menu and menudo days.</a></p><p class="body cash">Reviewers say it's cash only. Bring cash to be safe.</p></div></section>
 '''+foot()
 find=head("Find Us | Lucy's Drive Thru, 1568 W Pico Blvd, Los Angeles","Lucy's Drive Thru is at 1568 W Pico Blvd, Los Angeles, CA 90015 in Pico-Union. Open 24 hours, 7 days. Drive-thru and dining area. Call (213) 384-0721.","find-us/")+f'''
 <section class="page-h"><div>{tc("Pico-Union")}<h1 class="mega2">Find Lucy's</h1><p class="lede">1568 W Pico Blvd. Open 24 hours, 7 days.</p><div class="ctas">{DIRB}{CALL}</div></div></section>
 <section class="find-grid"><div class="fg-l">
-<dl class="facts"><dt>Address</dt><dd>1568 W Pico Blvd<br>Los Angeles, CA 90015</dd><dt>Phone</dt><dd><a data-call href="{TEL}">(213) 384-0721</a></dd><dt>Hours</dt><dd>Open 24 hours, 7 days</dd><dt>How</dt><dd>Drive-thru and takeout. Listings mention a patio, a dining area and a free lot. <span class="need">[NEED: confirm dining room + patio]</span></dd><dt>Pay</dt><dd>Reviewers say it's cash only. Bring cash to be safe. <span class="need">[NEED: confirm payment]</span></dd></dl>
+<dl class="facts"><dt>Address</dt><dd>1568 W Pico Blvd<br>Los Angeles, CA 90015</dd><dt>Phone</dt><dd><a data-call href="{TEL}">(213) 384-0721</a></dd><dt>Hours</dt><dd>Open 24 hours, 7 days</dd><dt>How</dt><dd>Drive-thru and takeout. Listings mention a patio, a dining area and a free lot. <a href="{TEL}">Call to confirm.</a></dd><dt>Pay</dt><dd>Reviewers say it's cash only. Bring cash to be safe.</dd></dl>
 <p><a class="txtlink" href="{GMAP}" target="_blank" rel="noopener">Open in Google Maps →</a></p></div>
 <figure class="fg-r map">{pic("map",[640,1200],"(min-width:900px) 58vw, 100vw","Map of W Pico Blvd in Pico-Union with a marker at 1568 W Pico Blvd",1200,640)}<figcaption class="mapc">Map data © <a href="https://www.openstreetmap.org/copyright" rel="noopener" target="_blank">OpenStreetMap</a> contributors</figcaption></figure></section>
 '''+foot()
